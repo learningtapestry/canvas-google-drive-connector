@@ -1,0 +1,25 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: <%= ENV['POSTGRESQL_ADDRESS'] %>
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  port: <%= ENV.fetch('POSTGRESQL_PORT', 5432) %>
+
+production: &production
+  <<: *default
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>_production
+
+staging:
+  <<: *production
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>_staging
+
+development:
+  <<: *default
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>_development
+
+test:
+  <<: *default
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>_test

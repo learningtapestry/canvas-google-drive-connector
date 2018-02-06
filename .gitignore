@@ -1,0 +1,10 @@
+.env
+/.bundle
+.byebug_history
+/.env.development
+
+.idea/
+cache/
+converter/
+logs/
+node_modules/

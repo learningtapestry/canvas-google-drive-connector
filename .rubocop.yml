@@ -1,0 +1,62 @@
+AllCops:
+  Include:
+    - Gemfile
+    - Guardfile
+    - Rakefile
+    - config.ru
+    - lib/**/*.rake
+  Exclude:
+    - db/schema.rb
+  TargetRubyVersion: 2.5
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 39
+
+Metrics/BlockLength:
+  Exclude:
+  - '**/*_spec.rb'
+  - 'config/routes.rb'
+  ExcludedMethods: ['guard', 'included']
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 50
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Style/AndOr:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+
+Style/Documentation:
+  Enabled: false
+
+Style/NestedParenthesizedCalls:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '()'
+    '%i': '()'
+    '%r': '{}'
+    '%w': '()'
+
+Style/RescueModifier:
+  Enabled: false
