@@ -2,9 +2,10 @@
 
 require 'bundler/setup'
 require 'dotenv/load'
+require 'pathname'
 
 APP_ENV = ENV['RACK_ENV'] || 'development'
-APP_ROOT = File.expand_path __dir__
+APP_ROOT = Pathname.new(File.expand_path __dir__)
 
 require 'sinatra'
 require 'sinatra/activerecord'

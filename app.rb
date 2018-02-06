@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'sinatra/json'
+require 'sinatra/respond_with'
 require_relative 'init'
 
 configure :development do
@@ -25,4 +26,8 @@ end
 
 get '/' do
   json Hash[lti_canvas_google: true]
+end
+
+get '/config.xml', provides: [:xml] do
+  respond_with :lti_config
 end
