@@ -11,11 +11,9 @@ configure :development do
   enable :logging, :dump_errors, :raise_errors
 end
 
-# Add json data to params on POST requests
-use Rack::PostBodyContentTypeParser
-
-# allow embeding on iFrames
-set :protection, except: :frame_options
+use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
+set :protection, except: :frame_options # allow embeding on iFrames
+set :static, true
 
 helpers do
   def authorized?

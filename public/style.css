@@ -1,0 +1,27 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #444;
+}
+
+.container {
+    margin: 5em auto;
+    max-width: 900px;
+}
+
+.credentials-new {
+    text-align: center;
+}
+
+.credentials-generate-btn {
+    background-color: #206da0;
+    border: none;
+    border-radius: .5em;
+    box-shadow: #444 1px 1px 1px;
+    color: #fff;
+    padding: 1em 2em;
+}
+
+.credentials-generate-btn:hover {
+    background-color: #497b9c;
+    cursor: pointer;
+}
