@@ -37,6 +37,10 @@ get '/credentials/new' do
   erb :'credentials/new'
 end
 
+post '/credentials' do
+  erb :'credentials/created', locals: { credential: Credential.generate }
+end
+
 namespace :lti do
   before do
     error 401 unless authorized?

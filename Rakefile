@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'app'
+require_relative 'init'
 
 require 'sinatra/activerecord/rake'
 require 'rake/testtask'

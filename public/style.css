@@ -25,3 +25,23 @@ body {
     background-color: #497b9c;
     cursor: pointer;
 }
+
+.credentials-created {
+    text-align: center;
+}
+
+.credential {
+    padding: 1em 0;
+}
+
+.credential-label {
+    margin: .5em 0;
+}
+
+.credential-value {
+    background-color: #95caec;
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 1em;
+    width: 50%;
+}
