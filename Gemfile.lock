@@ -68,6 +68,8 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.2)
     rack (2.0.4)
+    rack-contrib (2.0.1)
+      rack (~> 2.0)
     rack-protection (2.0.0)
       rack
     rake (12.3.0)
@@ -115,6 +117,7 @@ DEPENDENCIES
   pg (~> 0.18)
   pry-byebug
   puma
+  rack-contrib (~> 2.0, >= 2.0.1)
   rake (~> 12.3)
   require_all (~> 1.5)
   sinatra (~> 2.0)

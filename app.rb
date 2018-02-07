@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
+require 'rack'
+require 'rack/contrib'
 require 'sinatra'
-require 'sinatra/json'
 require 'sinatra/respond_with'
+require 'sinatra/namespace'
 require_relative 'init'
 
 configure :development do
   enable :logging, :dump_errors, :raise_errors
 end
+
+# Add json data to params on POST requests
+use Rack::PostBodyContentTypeParser
+
+# allow embeding on iFrames
+set :protection, except: :frame_options
 
 helpers do
   def authorized?
@@ -20,14 +28,23 @@ helpers do
   end
 end
 
-before do
-  error 401 unless authorized?
-end
-
 get '/' do
-  json Hash[lti_canvas_google: true]
 end
 
 get '/config.xml', provides: [:xml] do
   respond_with :lti_config
+end
+
+get '/credentials/new' do
+  erb :'credentials/new'
+end
+
+namespace :lti do
+  before do
+    error 401 unless authorized?
+  end
+
+  post 'course-navigation' do
+    erb :'lti/course_navigation'
+  end
 end
