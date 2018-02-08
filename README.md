@@ -15,13 +15,6 @@ This app uses:
 For setting up first create your `.env` file:  `cp .env.template .env`
 and then modify with your credentials
 
-This is a simple service API, use by UnboundEd, for data retrieval and
-indexing of components.
-
-* Ruby 2.3.1 + Sinatra
-* `PostgreSQL 9.4`
-* `ElasticSearch >=2.2.0`
-
 ## Run
 - `ruby app.rb`
 
