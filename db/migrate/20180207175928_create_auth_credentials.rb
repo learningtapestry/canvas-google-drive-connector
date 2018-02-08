@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateLtiAuthCredentials < ActiveRecord::Migration[5.1]
+class CreateAuthCredentials < ActiveRecord::Migration[5.1]
   def change
-    create_table :lti_auth_credentials do |t|
+    create_table :auth_credentials do |t|
       t.string :key, null: false, index: true
       t.string :secret, null: false
 

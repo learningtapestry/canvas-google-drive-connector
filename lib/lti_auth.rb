@@ -3,9 +3,13 @@
 require 'ims'
 
 class LtiAuth
-  def initialize(req)
-    @url = req.url
-    @params = req.params
+  def initialize(request)
+    @url = request.url
+    @params = request.params
+  end
+
+  def self.authenticate?(request)
+    new(request).valid?
   end
 
   def valid?
@@ -27,18 +31,18 @@ class LtiAuth
   attr_reader :params, :url
 
   def expired?
-    DateTime.strptime(params['oauth_timestamp'],'%s') < 5.minutes.ago
+    DateTime.strptime(params['oauth_timestamp'], '%s') < 5.minutes.ago # rubocop:disable Style/DateTime
   end
 
   def nonce_used?
-    LtiAuthNonce.exists?(nonce: params['oauth_nonce'])
+    AuthNonce.exists?(nonce: params['oauth_nonce'])
   end
 
   def shared_secret
-    LtiAuthCredential.find_by(key: params['oauth_consumer_key'])&.secret
+    AuthCredential.find_by(key: params['oauth_consumer_key'])&.secret
   end
 
   def use_nonce!
-    LtiAuthNonce.create!(nonce: params['oauth_nonce'], timestamp: params['oauth_timestamp'])
+    AuthNonce.create!(nonce: params['oauth_nonce'], timestamp: params['oauth_timestamp'])
   end
 end

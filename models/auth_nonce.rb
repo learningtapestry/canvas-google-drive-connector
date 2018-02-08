@@ -2,6 +2,6 @@
 
 require 'securerandom'
 
-class LtiAuthNonce < ActiveRecord::Base
+class AuthNonce < ActiveRecord::Base
   validates :nonce, :timestamp, presence: true
 end

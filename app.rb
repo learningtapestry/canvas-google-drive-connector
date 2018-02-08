@@ -34,7 +34,7 @@ end
 
 namespace '/lti' do
   before do
-    error 401 unless LtiAuth.new(request).valid?
+    error 401 unless LtiAuth.authenticate?(request)
   end
 
   post '/course-navigation' do
