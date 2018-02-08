@@ -10,18 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207175928) do
+ActiveRecord::Schema.define(version: 20180208133128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "credentials", force: :cascade do |t|
+  create_table "lti_auth_credentials", force: :cascade do |t|
     t.string "key", null: false
     t.string "secret", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_credentials_on_key"
-    t.index ["secret"], name: "index_credentials_on_secret"
+    t.index ["key"], name: "index_lti_auth_credentials_on_key"
+  end
+
+  create_table "lti_auth_nonces", force: :cascade do |t|
+    t.string "nonce", null: false
+    t.bigint "timestamp", null: false
+    t.index ["nonce"], name: "index_lti_auth_nonces_on_nonce"
   end
 
 end

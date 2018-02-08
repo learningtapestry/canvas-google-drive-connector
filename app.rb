@@ -15,22 +15,13 @@ use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
 set :protection, except: :frame_options # allow embeding on iFrames
 set :static, true
 
-helpers do
-  def authorized?
-    true
-    # if env['HTTP_AUTHORIZATION'].present?
-    #   auth_token = env['HTTP_AUTHORIZATION'].match(/Token token="(\w+)"/)[1]
-    #   return true if auth_token && AccessToken.where(token: auth_token).exists?
-    # end
-    # false
-  end
-end
-
 get '/' do
 end
 
 get '/config.xml', provides: [:xml] do
-  respond_with :lti_config
+  respond_with :lti_config do |fmt|
+    fmt.xml { erb :'lti_config.xml', layout: false }
+  end
 end
 
 get '/credentials/new' do
@@ -41,12 +32,12 @@ post '/credentials' do
   erb :'credentials/created', locals: { credential: Credential.generate }
 end
 
-namespace :lti do
+namespace '/lti' do
   before do
-    error 401 unless authorized?
+    error 401 unless LtiAuth.new(request).valid?
   end
 
-  post 'course-navigation' do
+  post '/course-navigation' do
     erb :'lti/course_navigation'
   end
 end

@@ -6,7 +6,7 @@ AllCops:
     - config.ru
     - lib/**/*.rake
   Exclude:
-    - db/schema.rb
+    - 'db/schema.rb'
   TargetRubyVersion: 2.5
 
 Layout/MultilineMethodCallIndentation:

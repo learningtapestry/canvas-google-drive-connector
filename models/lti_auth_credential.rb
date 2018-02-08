@@ -2,7 +2,7 @@
 
 require 'securerandom'
 
-class Credential < ActiveRecord::Base
+class LtiAuthCredential < ActiveRecord::Base
   validates :key, :secret, presence: true
 
   def self.generate
