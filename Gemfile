@@ -23,5 +23,6 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rack-test', '~> 0.8.2'
   gem 'database_cleaner'
 end
