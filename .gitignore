@@ -6,5 +6,5 @@
 .idea/
 cache/
 converter/
-logs/
+logs/*.log
 node_modules/

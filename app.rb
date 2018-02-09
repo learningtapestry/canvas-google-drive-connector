@@ -1,19 +1,26 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'rack'
 require 'rack/contrib'
 require 'sinatra'
 require 'sinatra/respond_with'
 require 'sinatra/namespace'
+
 require_relative 'init'
 
-configure :development do
-  enable :logging, :dump_errors, :raise_errors
-end
+configure do
+  enable :dump_errors, :raise_errors if development?
 
-use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
-set :protection, except: :frame_options # allow embeding on iFrames
-set :static, true
+  set :static, true
+  set :protection, except: :frame_options # allow embeding on iFrames
+
+  log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
+  log_file.sync = true
+
+  use Rack::CommonLogger, Logger.new(log_file, 'weekly')
+  use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
+end
 
 get '/' do
 end
@@ -34,7 +41,10 @@ end
 
 namespace '/lti' do
   before do
-    error 401 unless LtiAuth.authenticate?(request)
+    unless (lti_auth = LtiAuth.new(request)) && lti_auth.valid?
+      logger.warn("LTI Authentication error: #{lti_auth.error}")
+      error 401
+    end
   end
 
   post '/course-navigation' do

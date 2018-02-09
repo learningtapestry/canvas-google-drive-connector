@@ -3,25 +3,36 @@
 require 'ims'
 
 class LtiAuth
+  attr_reader :error
+
   def initialize(request)
     @url = request.url
     @params = request.params
   end
 
-  def self.authenticate?(request)
-    new(request).valid?
-  end
-
   def valid?
-    return false unless shared_secret
+    unless shared_secret
+      @error = "No key/pair credentials for #{params['oauth_consumer_key']}"
+      return false
+    end
 
     authenticator = IMS::LTI::Services::MessageAuthenticator.new(url, params, shared_secret)
-    return false unless authenticator.valid_signature?
+    unless authenticator.valid_signature?
+      @error = 'Invalid Signature'
+      return false
+    end
 
-    return false if nonce_used?
-    use_nonce!
+    if nonce_used?
+      @error = "Nonce already used: #{params['oauth_nonce']}"
+      return false
+    else
+      use_nonce!
+    end
 
-    return false if expired?
+    if expired?
+      @error = "Timestamp expired #{params['oauth_timestamp']}"
+      return false
+    end
 
     true
   end
