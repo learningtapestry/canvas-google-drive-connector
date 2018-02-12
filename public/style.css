@@ -45,3 +45,43 @@ body {
     padding: 1em;
     width: 50%;
 }
+
+.googleauth {
+    text-align: center;
+}
+.googleauth h1 {
+    margin: 2em auto;
+}
+.googleauth p {
+    margin-bottom: 1em;
+}
+.googleauth-btn,
+.googleauth-next {
+    background-color: #ddd;
+    border-color: #555;
+    border-radius: .5em;
+    box-shadow : #444 2px 2px 2px;
+    color: #444;
+    display: inline-block;
+    margin: 1em auto;
+    width: 200px;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+}
+.googleauth-btn:hover,
+.googleauth-next:hover {
+    background-color: #eee;
+    box-shadow: #777 2px 2px 2px;
+}
+.googleauth-next {
+    display: none;
+}
+.googleauth .show {
+    transition: display 1s ease-in-out;
+    display: inline-block;
+}
+.googleauth .hide {
+    transition: display 1s ease-in-out;
+    display: none;
+}

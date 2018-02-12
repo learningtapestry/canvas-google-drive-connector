@@ -7,6 +7,7 @@ source 'http://rubygems.org'
 gem 'activerecord', '~> 5.1', '>= 5.1.4'
 gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'google-api-client', '~> 0.19.6'
+gem 'googleauth', '~> 0.6.2'
 gem 'ims-lti', '~> 2.2', '>= 2.2.3'
 gem 'pg', '~> 0.18'
 gem 'rack-contrib', '~> 2.0', '>= 2.0.1'
@@ -23,6 +24,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rack-test', '~> 0.8.2'
   gem 'database_cleaner'
+  gem 'rack-test', '~> 0.8.2'
 end

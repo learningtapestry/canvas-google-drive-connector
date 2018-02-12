@@ -1,0 +1,23 @@
+<div class="googleauth">
+    <p>You need to authorize this integration with your Google account in order to use it.</p>
+    <p>Click the button below and after you finished authorizing, click the "Next" button.</p>
+
+    <div>
+        <a class="googleauth-btn" href="/google_auth" target="_blank">Authorize on Google</a>
+    </div>
+    <div>
+        <a class="googleauth-next" href="#" onClick="parent.window.location.reload()">Next</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        var btn = document.querySelector('.googleauth-btn');
+        var nxt = document.querySelector('.googleauth-next');
+
+        btn.onclick = function() {
+            btn.classList.add('hide');
+            setTimeout(function() { nxt.classList.add('show') }, 500);
+        };
+    })();
+</script>

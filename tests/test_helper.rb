@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 ENV['RACK_ENV'] = 'test'
 
 require 'minitest/autorun'
@@ -9,13 +10,11 @@ require_relative '../app'
 
 DatabaseCleaner.strategy = :transaction
 
-class Minitest::Spec
-  before :each do
-    DatabaseCleaner.start
-  end
+module Minitest
+  class Spec
+    include Rack::Test::Methods
 
-  after :each do
-    byebug
-    DatabaseCleaner.clean
+    before(:each) { DatabaseCleaner.start }
+    after(:each) { DatabaseCleaner.clean }
   end
 end

@@ -135,6 +135,7 @@ DEPENDENCIES
   database_cleaner
   dotenv (~> 2.2, >= 2.2.1)
   google-api-client (~> 0.19.6)
+  googleauth (~> 0.6.2)
   ims-lti (~> 2.2, >= 2.2.3)
   pg (~> 0.18)
   pry-byebug

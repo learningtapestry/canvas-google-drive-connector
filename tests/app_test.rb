@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-require_relative 'test_helper'
 
-include Rack::Test::Methods
+require_relative 'test_helper'
 
 def app
   Sinatra::Application

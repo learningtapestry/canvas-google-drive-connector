@@ -1,3 +1,6 @@
-<h1>Browse Files</h1>
-<br/><br/>
-<button>Authorize GDrive</button>
+<% if creds = google_auth.credentials %>
+    <p>Logged in on google: <%= creds %></p>
+<% else %>
+    <a href="/google_auth" target='_blank'>Google Authorization</a>
+<% end %>
+
