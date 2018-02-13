@@ -7,7 +7,7 @@ class LtiAuth
 
   def initialize(request)
     @url = request.url
-    @params = request.params
+    @params = request.params.except(:captures)
   end
 
   def valid?
@@ -20,13 +20,6 @@ class LtiAuth
     unless authenticator.valid_signature?
       @error = 'Invalid Signature'
       return false
-    end
-
-    if nonce_used?
-      @error = "Nonce already used: #{params['oauth_nonce']}"
-      return false
-    else
-      use_nonce!
     end
 
     if expired?
@@ -45,15 +38,7 @@ class LtiAuth
     DateTime.strptime(params['oauth_timestamp'], '%s') < 5.minutes.ago # rubocop:disable Style/DateTime
   end
 
-  def nonce_used?
-    AuthNonce.exists?(nonce: params['oauth_nonce'])
-  end
-
   def shared_secret
-    AuthCredential.find_by(key: params['oauth_consumer_key'])&.secret
-  end
-
-  def use_nonce!
-    AuthNonce.create!(nonce: params['oauth_nonce'], timestamp: params['oauth_timestamp'])
+    @shared_secret ||= AuthCredential.find_by(key: params['oauth_consumer_key'])&.secret
   end
 end
