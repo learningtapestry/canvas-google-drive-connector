@@ -22,6 +22,10 @@ configure do
 end
 
 helpers do
+  def partial(template, locals = {})
+    erb(template, layout: false, locals: locals)
+  end
+
   def google_auth
     @google_auth ||= GoogleAuth.new(request, session[:user_id])
   end
@@ -64,7 +68,8 @@ namespace '/lti' do
     end
   end
 
-  post '/course-navigation' do
-    erb :'lti/course_navigation'
+  get '/course-navigation' do
+    gdrive = GoogleDriveService.new(google_auth.credentials)
+    erb :'lti/course_navigation', locals: { gdrive: gdrive }
   end
 end
