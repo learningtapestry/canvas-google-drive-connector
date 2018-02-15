@@ -61,15 +61,16 @@ namespace '/lti' do
   before do
     if (lti_auth = LtiAuth.new(request)) && lti_auth.valid?
       session[:user_id] = params['custom_user_id']
-      halt erb(:'google_auth/authorize') unless google_auth.credentials
     else
       logger.warn("LTI Authentication error: #{lti_auth.error}")
       error 401
     end
+    # session[:user_id] = 1
+    halt erb(:'google_auth/authorize') unless session[:user_id] && google_auth.credentials
   end
 
-  get '/course-navigation' do
-    gdrive = GoogleDriveService.new(google_auth.credentials)
+  post '/course-navigation' do
+    gdrive = GDriveService.new(google_auth.credentials)
     erb :'lti/course_navigation', locals: { gdrive: gdrive }
   end
 end

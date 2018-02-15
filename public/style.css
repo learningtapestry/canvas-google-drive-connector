@@ -1,88 +1,139 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    color: #444;
+  color: #444;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #444;
+  text-decoration: none;
 }
 
 .container {
-    margin: 5em auto;
-    max-width: 900px;
+  margin: 5em auto;
+  max-width: 900px;
 }
 
 .credentials-new {
-    text-align: center;
+  text-align: center;
 }
 
 .credentials-generate-btn {
-    background-color: #206da0;
-    border: none;
-    border-radius: .5em;
-    box-shadow: #444 1px 1px 1px;
-    color: #fff;
-    padding: 1em 2em;
+  background-color: #206da0;
+  border: 0;
+  border-radius: .5em;
+  box-shadow: #444 1px 1px 1px;
+  color: #fff;
+  padding: 1em 2em;
 }
 
 .credentials-generate-btn:hover {
-    background-color: #497b9c;
-    cursor: pointer;
+  background-color: #497b9c;
+  cursor: pointer;
 }
 
 .credentials-created {
-    text-align: center;
+  text-align: center;
 }
 
 .credential {
-    padding: 1em 0;
+  padding: 1em 0;
 }
 
 .credential-label {
-    margin: .5em 0;
+  margin: .5em 0;
 }
 
 .credential-value {
-    background-color: #95caec;
-    margin: 0 auto;
-    max-width: 400px;
-    padding: 1em;
-    width: 50%;
+  background-color: #95caec;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 1em;
+  width: 50%;
 }
 
 .googleauth {
-    text-align: center;
+  text-align: center;
 }
+
 .googleauth h1 {
-    margin: 2em auto;
+  margin: 2em auto;
 }
+
 .googleauth p {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
+
 .googleauth-btn,
 .googleauth-next {
-    background-color: #ddd;
-    border-color: #555;
-    border-radius: .5em;
-    box-shadow : #444 2px 2px 2px;
-    color: #444;
-    display: inline-block;
-    margin: 1em auto;
-    width: 200px;
-    padding: 1em;
-    text-align: center;
-    text-decoration: none;
+  background-color: #ddd;
+  border-color: #555;
+  border-radius: .5em;
+  box-shadow: #444 2px 2px 2px;
+  color: #444;
+  display: inline-block;
+  margin: 1em auto;
+  padding: 1em;
+  text-align: center;
+  width: 200px;
 }
+
 .googleauth-btn:hover,
 .googleauth-next:hover {
-    background-color: #eee;
-    box-shadow: #777 2px 2px 2px;
+  background-color: #eee;
+  box-shadow: #777 2px 2px 2px;
 }
+
 .googleauth-next {
-    font-size: 1em;
-    display: none;
+  display: none;
+  font-size: 1em;
 }
+
 .googleauth .show {
-    transition: display 1s ease-in-out;
-    display: inline-block;
+  display: inline-block;
+  transition: display 1s ease-in-out;
 }
+
 .googleauth .hide {
-    transition: display 1s ease-in-out;
-    display: none;
+  display: none;
+  transition: display 1s ease-in-out;
+}
+
+.gdrivelist ul {
+  list-style: none;
+}
+
+.gdrivelist-folders {
+  border-bottom: solid 1px #ddd;
+  padding: 0 2em;
+}
+
+.gdrivelist-files {
+  padding: 0 2em;
+}
+
+.gdrivelist-folder,
+.gdrivelist-file {
+  display: inline-block;
+  padding: .5em 1em 1em;
+  width: 100%;
+}
+
+.gdrivelist-folder:hover {
+  background-color: #eee;
+}
+
+.gdrivelist-icon {
+  border: solid .01em #555;
+  border-radius: 1em;
+  margin-bottom: -.7em;
+  margin-right: 1em;
+  padding: .5em;
+  width: 1em;
+}
+
+.gdrivelist-arrow {
+  color: #999;
+  float: right;
+  font-weight: bold;
+  margin-top: .7em;
 }
