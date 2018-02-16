@@ -1,48 +1,33 @@
 # frozen_string_literal: true
 
-require 'logger'
-require 'rack'
-require 'rack/contrib'
 require 'sinatra'
 require 'sinatra/respond_with'
-require 'sinatra/namespace'
-require 'sprockets'
-require 'uglifier'
-require 'sass'
-
 require_relative 'init'
 require_relative 'helpers'
 
 configure do
-  enable :dump_errors, :raise_errors if development?
-  enable :static, :sessions
-  set :protection, except: :frame_options # allow embeding on iFrames
-
-  # initialize new sprockets environment
-  sprockets = Sprockets::Environment.new
-  sprockets.append_path 'assets/stylesheets'
-  sprockets.append_path 'assets/javascripts'
-  sprockets.js_compressor = :uglify
-  sprockets.css_compressor = :scss
-
-  set :environment, sprockets
-
   log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
   log_file.sync = true
 
+  set :protection, except: :frame_options # allow embeding on iFrames
+  set :assets_precompile, %w(application.js application.css *.png *.jpg *.svg *.eot *.ttf *.woff)
+  set :assets_css_compressor, :sass
+  set :assets_js_compressor, :uglifier
+  enable :dump_errors, :raise_errors if development?
+  enable :static, :sessions
+
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
+  register Sinatra::AssetPipeline
 end
 
 helpers Helpers
 
-# get assets
-get '/assets/*' do
-  env['PATH_INFO'].sub!('/assets', '')
-  settings.environment.call(env)
-end
+# ============
+# Config
 
 get '/' do
+  'Canvas-GoogleDrive-Connector'
 end
 
 get '/config.xml', provides: [:xml] do
@@ -51,6 +36,9 @@ get '/config.xml', provides: [:xml] do
   end
 end
 
+# ============
+# Credentials management
+
 get '/credentials/new' do
   erb :'credentials/new'
 end
@@ -58,6 +46,9 @@ end
 post '/credentials' do
   erb :'credentials/created', locals: { credential: AuthCredential.generate }
 end
+
+# ============
+# Google Oauth2
 
 get '/google_auth' do
   redirect google_auth.authorization_url unless google_auth.credentials
@@ -68,23 +59,18 @@ get '/google_auth/callback' do
   erb :'google_auth/success'
 end
 
-namespace '/lti' do
-  before do
-    if request.path.match? %r{/gdrive_list}
-      session[:user_id] = 1 # XXX: Temporary for local testing
-    else
-      authenticate_lti
-    end
-    authenticate_google
-  end
+# ============
+# LTI endpoints
 
-  get '/course-navigation' do
-    gdrive = GDriveService.new(google_auth.credentials)
-    erb :'lti/course_navigation', locals: { gdrive: gdrive }
-  end
+# XXX: Temporary for local testing
+get '/lti/course-navigation' do
+  (session[:user_id] = 1) && authenticate!([:google])
+  gdrive = GDriveService.new(google_auth.credentials)
+  erb :'lti/course_navigation', locals: { gdrive: gdrive }
+end
 
-  post '/course-navigation' do
-    gdrive = GDriveService.new(google_auth.credentials)
-    erb :'lti/course_navigation', locals: { gdrive: gdrive }
-  end
+post '/lti/course-navigation' do
+  authenticate! %i(lti google)
+  gdrive = GDriveService.new(google_auth.credentials)
+  erb :'lti/course_navigation', locals: { gdrive: gdrive }
 end

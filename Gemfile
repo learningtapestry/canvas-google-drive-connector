@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 ruby '2.5.0'
-
 source 'http://rubygems.org'
 
 gem 'activerecord', '~> 5.1', '>= 5.1.4'
@@ -16,8 +15,8 @@ gem 'require_all', '~> 1.5'
 gem 'sass', '~> 3.5', '>= 3.5.5'
 gem 'sinatra', '~> 2.0'
 gem 'sinatra-activerecord', '~> 2.0', '>= 2.0.13'
-gem 'sinatra-contrib', '~> 2.0'
-gem 'sprockets', '~> 3.7', '>= 3.7.1'
+gem 'sinatra-asset-pipeline', '~> 2.0', require: 'sinatra/asset_pipeline'
+gem 'sinatra-contrib', '~> 2.0', require: false
 gem 'uglifier', '~> 4.1', '>= 4.1.6'
 
 group :development, :test do

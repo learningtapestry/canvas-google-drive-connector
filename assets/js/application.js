@@ -1,5 +1,8 @@
+//= require vendor/zepto
+//= require vendor/vue
+
 (function() {
-  var pageHas = function(selector) { return document.querySelector(selector); };
+  var pageHas = function(selector) { return $(selector).length > 0; };
 
   // googleauth/success
   var initGoogleAuthSuccess = function() {
