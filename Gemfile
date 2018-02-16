@@ -13,9 +13,12 @@ gem 'pg', '~> 0.18'
 gem 'rack-contrib', '~> 2.0', '>= 2.0.1'
 gem 'rake', '~> 12.3'
 gem 'require_all', '~> 1.5'
+gem 'sass', '~> 3.5', '>= 3.5.5'
 gem 'sinatra', '~> 2.0'
 gem 'sinatra-activerecord', '~> 2.0', '>= 2.0.13'
 gem 'sinatra-contrib', '~> 2.0'
+gem 'sprockets', '~> 3.7', '>= 3.7.1'
+gem 'uglifier', '~> 4.1', '>= 4.1.6'
 
 group :development, :test do
   gem 'byebug'

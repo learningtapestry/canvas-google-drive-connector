@@ -1,10 +1,17 @@
+$text: #444;
+$blue: #206da0;
+$light-blue: #497b9c;
+$light-grey: #ddd;
+$dark-grey: #555;
+$white: #fff;
+
 body {
-  color: #444;
+  color: $text;
   font-family: Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #444;
+  color: $text;
   text-decoration: none;
 }
 
@@ -18,17 +25,17 @@ a {
 }
 
 .credentials-generate-btn {
-  background-color: #206da0;
+  background-color: $blue;
   border: 0;
   border-radius: .5em;
-  box-shadow: #444 1px 1px 1px;
-  color: #fff;
+  box-shadow: $text 1px 1px 1px;
+  color: $white;
   padding: 1em 2em;
-}
 
-.credentials-generate-btn:hover {
-  background-color: #497b9c;
-  cursor: pointer;
+  &:hover {
+    background-color: $light-blue;
+    cursor: pointer;
+  }
 }
 
 .credentials-created {
@@ -44,7 +51,7 @@ a {
 }
 
 .credential-value {
-  background-color: #95caec;
+  background-color: lighten($light-blue, 30%);
   margin: 0 auto;
   max-width: 400px;
   padding: 1em;
@@ -53,23 +60,29 @@ a {
 
 .googleauth {
   text-align: center;
-}
 
-.googleauth h1 {
-  margin: 2em auto;
-}
+  h1 { margin: 2em auto; }
 
-.googleauth p {
-  margin-bottom: 1em;
+  p { margin-bottom: 1em; }
+
+  .show {
+    display: inline-block;
+    transition: display 1s ease-in-out;
+  }
+
+  .hide {
+    display: none;
+    transition: display 1s ease-in-out;
+  }
 }
 
 .googleauth-btn,
 .googleauth-next {
-  background-color: #ddd;
-  border-color: #555;
+  background-color: $light-grey;
+  border-color: $dark-grey;
   border-radius: .5em;
-  box-shadow: #444 2px 2px 2px;
-  color: #444;
+  box-shadow: $text 2px 2px 2px;
+  color: $text;
   display: inline-block;
   margin: 1em auto;
   padding: 1em;
@@ -79,8 +92,8 @@ a {
 
 .googleauth-btn:hover,
 .googleauth-next:hover {
-  background-color: #eee;
-  box-shadow: #777 2px 2px 2px;
+  background-color: lighten($light-grey, 10%);
+  box-shadow: lighten($dark-grey, 10%) 2px 2px 2px;
 }
 
 .googleauth-next {
@@ -88,22 +101,12 @@ a {
   font-size: 1em;
 }
 
-.googleauth .show {
-  display: inline-block;
-  transition: display 1s ease-in-out;
-}
-
-.googleauth .hide {
-  display: none;
-  transition: display 1s ease-in-out;
-}
-
 .gdrivelist ul {
   list-style: none;
 }
 
 .gdrivelist-folders {
-  border-bottom: solid 1px #ddd;
+  border-bottom: solid 1px $light-grey;
   padding: 0 2em;
 }
 
@@ -116,14 +119,15 @@ a {
   display: inline-block;
   padding: .5em 1em 1em;
   width: 100%;
+
+  &:hover {
+    background-color: lighten($light-grey, 10%);
+  }
 }
 
-.gdrivelist-folder:hover {
-  background-color: #eee;
-}
 
 .gdrivelist-icon {
-  border: solid .01em #555;
+  border: solid .01em $dark-grey;
   border-radius: 1em;
   margin-bottom: -.7em;
   margin-right: 1em;
@@ -132,7 +136,7 @@ a {
 }
 
 .gdrivelist-arrow {
-  color: #999;
+  color: lighten($dark-grey, 20%);
   float: right;
   font-weight: bold;
   margin-top: .7em;

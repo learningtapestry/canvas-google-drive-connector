@@ -1,5 +1,5 @@
 (function() {
-  var pageIs = function(selector) { return document.querySelector(selector); };
+  var pageHas = function(selector) { return document.querySelector(selector); };
 
   // googleauth/success
   var initGoogleAuthSuccess = function() {
@@ -16,9 +16,21 @@
     };
   };
 
+  // lti/gdrive-list
+  var initGDriveList = function() {
+    var folders = document.querySelectorAll('.gdrivelist-folder');
+    for (var i = 0; i < folders.length; i++) {
+      var folder = folders[i];
+      folder.onclick = function() {
+
+      };
+    }
+  };
+
   // Start page initializers
   document.addEventListener("DOMContentLoaded", function(event) {
-    if (pageIs('.googleauth.success')) initGoogleAuthSuccess();
-    if (pageIs('.googleauth.authorize')) initGoogleAuthAuthorize();
+    if (pageHas('.googleauth.success')) initGoogleAuthSuccess();
+    if (pageHas('.googleauth.authorize')) initGoogleAuthAuthorize();
+    if (pageHas('.gdrivelist')) initGDriveList();
   });
 })();

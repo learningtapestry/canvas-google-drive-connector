@@ -2,7 +2,7 @@
   <ul class="gdrivelist-folders">
     <% list.select(&:folder?).each do |f| %>
       <li>
-        <a class="gdrivelist-folder" href="<%= f.link %>">
+        <a class="gdrivelist-folder" href="#">
           <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder icon">
           <%= f.name %>
           <span class="gdrivelist-arrow">&rsaquo;</span>

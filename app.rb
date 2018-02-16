@@ -6,13 +6,26 @@ require 'rack/contrib'
 require 'sinatra'
 require 'sinatra/respond_with'
 require 'sinatra/namespace'
+require 'sprockets'
+require 'uglifier'
+require 'sass'
 
 require_relative 'init'
+require_relative 'helpers'
 
 configure do
   enable :dump_errors, :raise_errors if development?
   enable :static, :sessions
   set :protection, except: :frame_options # allow embeding on iFrames
+
+  # initialize new sprockets environment
+  sprockets = Sprockets::Environment.new
+  sprockets.append_path 'assets/stylesheets'
+  sprockets.append_path 'assets/javascripts'
+  sprockets.js_compressor = :uglify
+  sprockets.css_compressor = :scss
+
+  set :environment, sprockets
 
   log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
   log_file.sync = true
@@ -21,14 +34,12 @@ configure do
   use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
 end
 
-helpers do
-  def partial(template, locals = {})
-    erb(template, layout: false, locals: locals)
-  end
+helpers Helpers
 
-  def google_auth
-    @google_auth ||= GoogleAuth.new(request, session[:user_id])
-  end
+# get assets
+get '/assets/*' do
+  env['PATH_INFO'].sub!('/assets', '')
+  settings.environment.call(env)
 end
 
 get '/' do
@@ -45,7 +56,7 @@ get '/credentials/new' do
 end
 
 post '/credentials' do
-  erb :'credentials/created', locals: { credential: Credential.generate }
+  erb :'credentials/created', locals: { credential: AuthCredential.generate }
 end
 
 get '/google_auth' do
@@ -59,14 +70,17 @@ end
 
 namespace '/lti' do
   before do
-    if (lti_auth = LtiAuth.new(request)) && lti_auth.valid?
-      session[:user_id] = params['custom_user_id']
+    if request.path.match? %r{/gdrive_list}
+      session[:user_id] = 1 # XXX: Temporary for local testing
     else
-      logger.warn("LTI Authentication error: #{lti_auth.error}")
-      error 401
+      authenticate_lti
     end
-    # session[:user_id] = 1
-    halt erb(:'google_auth/authorize') unless session[:user_id] && google_auth.credentials
+    authenticate_google
+  end
+
+  get '/course-navigation' do
+    gdrive = GDriveService.new(google_auth.credentials)
+    erb :'lti/course_navigation', locals: { gdrive: gdrive }
   end
 
   post '/course-navigation' do
