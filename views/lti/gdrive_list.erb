@@ -1,10 +1,14 @@
 <div class="gdrivelist">
-  <div class="gdrivelist-back"></div>
+  <div class="gdrivelist-back">
+    <a href="#"><span>&#10140;</span> Back to parent folder</a>
+  </div>
   <h3>Folders</h3>
+  <% folders = list.select(&:folder?) %>
+  <% if folders.empty? %><p class="gdrivelist-empty">There are no subfolders here.</p><% end %>
   <ul class="gdrivelist-folders">
-    <% list.select(&:folder?).each do |f| %>
+    <% folders.each do |f| %>
       <li>
-        <a class="gdrivelist-folder" href="#" data-link="<%= f.link %>">
+        <a class="gdrivelist-folder" href="#" data-gdrive-id="<%= f.id %>">
           <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder">
           <%= f.name %>
           <span class="gdrivelist-arrow">&rsaquo;</span>
@@ -15,8 +19,10 @@
   <hr class="gdrivelist-separator">
 
   <h3>Files</h3>
+  <% files = list.select(&:file?) %>
+  <% if files.empty? %><p class="gdrivelist-empty">There are no files here.</p><% end %>
   <ul class="gdrivelist-files">
-    <% list.select(&:file?).each do |f| %>
+    <% files.each do |f| %>
       <li>
         <a class="gdrivelist-file" href="#" data-link="<%= f.link %>">
           <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">

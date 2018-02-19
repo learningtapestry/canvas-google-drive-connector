@@ -71,11 +71,10 @@ end
 post '/lti/gdrive-list' do
   session[:user_id] && authenticate!([:google]) # && CSRF
   gdrive = GDriveService.new(google_auth.credentials)
-  partial :'lti/gdrive_list', list: gdrive.list(params[:parent_id])
+  partial :'lti/gdrive_list', list: gdrive.list(params[:folder_id])
 end
 
 post '/lti/course-navigation' do
   authenticate! %i(lti google)
-  gdrive = GDriveService.new(google_auth.credentials)
-  erb :'lti/course_navigation', locals: { gdrive: gdrive }
+  erb :'lti/course_navigation'
 end

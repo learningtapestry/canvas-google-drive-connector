@@ -121,6 +121,33 @@ a {
   }
 }
 
+.gdrivelist-back {
+  margin-bottom: 2em;
+
+  a {
+    padding: 1.5em .5em 1em;
+
+    &:hover { background-color: lighten($light-grey, 10%); }
+  }
+
+  span {
+    border: solid .01em $dark-grey;
+    border-radius: 1em;
+    color: lighten($dark-grey, 20%);
+    display: inline-block;
+    font-size: 1.5em;
+    margin-right: .5em;
+    padding: .1em .35em;
+    transform: rotate(180deg);
+  }
+}
+
+.gdrivelist-empty {
+  color: $dark-grey;
+  margin-bottom: 1em;
+  padding: 1em 4em;
+}
+
 .gdrivelist-separator {
   border-color: lighten($light-grey, 10%);
   color: $light-grey;
@@ -174,4 +201,47 @@ a {
   float: right;
   font-weight: bold;
   margin-top: .7em;
+}
+
+.loader {
+  animation: load3 1.4s infinite linear;
+  background: linear-gradient(to right, $blue 10%, $white 42%);
+  border-radius: 50%;
+  font-size: 10px;
+  height: 11em;
+  margin: 50px auto;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  width: 11em;
+
+  &::after {
+    background: $white;
+    border-radius: 50%;
+    bottom: 0;
+    content: '';
+    height: 75%;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 75%;
+  }
+
+  &::before {
+    background: $blue;
+    border-radius: 100% 0 0;
+    content: '';
+    height: 50%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+  }
+}
+
+@keyframes load3 {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg); }
 }
