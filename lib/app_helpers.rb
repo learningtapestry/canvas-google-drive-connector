@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Helpers
+module AppHelpers
   def authenticate!(methods = [])
     methods.each { |method| send :"authenticate_#{method}" }
   end

@@ -3,14 +3,12 @@
 require 'sinatra'
 require 'sinatra/respond_with'
 require_relative 'init'
-require_relative 'helpers'
 
 configure do
   log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
   log_file.sync = true
 
   set :protection, except: :frame_options # allow embeding on iFrames
-  set :assets_precompile, %w(application.js application.css *.png *.jpg *.svg *.eot *.ttf *.woff)
   set :assets_css_compressor, :sass
   set :assets_js_compressor, :uglifier
   enable :dump_errors, :raise_errors if development?
@@ -21,7 +19,7 @@ configure do
   register Sinatra::AssetPipeline
 end
 
-helpers Helpers
+helpers AppHelpers
 
 # ============
 # Config

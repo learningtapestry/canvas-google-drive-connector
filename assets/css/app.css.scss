@@ -16,7 +16,7 @@ a {
 }
 
 .container {
-  margin: 5em auto;
+  margin: 0 auto;
   max-width: 900px;
 }
 
@@ -92,7 +92,7 @@ a {
 
 .googleauth-btn:hover,
 .googleauth-next:hover {
-  background-color: lighten($light-grey, 10%);
+  background-color: lighten($light-grey, 5%);
   box-shadow: lighten($dark-grey, 10%) 2px 2px 2px;
 }
 
@@ -105,20 +105,17 @@ a {
   list-style: none;
 }
 
-.gdrivelist-folders {
-  border-bottom: solid 1px $light-grey;
-  padding: 0 2em;
-}
-
-.gdrivelist-files {
-  padding: 0 2em;
+.gdrivelist-separator {
+  border-color: lighten($light-grey, 10%);
+  color: $light-grey;
+  margin: -1em 1.75em 0 2.5em;
 }
 
 .gdrivelist-folder,
 .gdrivelist-file {
   display: inline-block;
-  padding: .5em 1em 1em;
-  width: 100%;
+  padding: .5em .5em 1em;
+  width: 95%;
 
   &:hover {
     background-color: lighten($light-grey, 10%);
