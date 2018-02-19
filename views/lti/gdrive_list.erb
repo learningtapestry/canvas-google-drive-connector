@@ -1,8 +1,10 @@
 <div class="gdrivelist">
+  <div class="gdrivelist-back"></div>
+  <h3>Folders</h3>
   <ul class="gdrivelist-folders">
     <% list.select(&:folder?).each do |f| %>
       <li>
-        <a class="gdrivelist-folder" href="#">
+        <a class="gdrivelist-folder" href="#" data-link="<%= f.link %>">
           <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder">
           <%= f.name %>
           <span class="gdrivelist-arrow">&rsaquo;</span>
@@ -12,10 +14,11 @@
   </ul>
   <hr class="gdrivelist-separator">
 
+  <h3>Files</h3>
   <ul class="gdrivelist-files">
     <% list.select(&:file?).each do |f| %>
       <li>
-        <a class="gdrivelist-file" href="<%= f.link %>">
+        <a class="gdrivelist-file" href="#" data-link="<%= f.link %>">
           <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
           <%= f.name %>
         </a>

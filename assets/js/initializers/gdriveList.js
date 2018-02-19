@@ -7,9 +7,22 @@ App.gdriveList = function(container) {
     cache: false,
     success: function(resp) {
       container.html(resp)
-    },
-    error: function(err) {
-      alert('Failed loading the google drive folder');
+      bindEvents();
     }
   });
+
+  var bindEvents = function() {
+    container.find('.gdrivelist-file').on('click', function(e) {
+      var el = $(e.target);
+      if (el.is('.selected .gdrivelist-actions a')) return;
+
+      e.preventDefault();
+
+      container.find('.gdrivelist-file.selected').removeClass('selected');
+      container.find('.gdrivelist-file .gdrivelist-actions').remove();
+
+      el.toggleClass('selected');
+      el.append(`<span class="gdrivelist-actions"><a href="${el.data('link')}" target="_blank">Open</a></span>`);
+    });
+  }
 };

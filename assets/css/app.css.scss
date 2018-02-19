@@ -1,6 +1,6 @@
 $text: #444;
 $blue: #206da0;
-$light-blue: #497b9c;
+$light-blue: lighten($blue, 30%);
 $light-grey: #ddd;
 $dark-grey: #555;
 $white: #fff;
@@ -8,6 +8,7 @@ $white: #fff;
 body {
   color: $text;
   font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
 }
 
 a {
@@ -17,7 +18,14 @@ a {
 
 .container {
   margin: 0 auto;
+  margin-bottom: -50px;
   max-width: 900px;
+  min-height: 100%;
+
+  &::after {
+    content: '';
+    display: block;
+  }
 }
 
 .credentials-new {
@@ -33,7 +41,7 @@ a {
   padding: 1em 2em;
 
   &:hover {
-    background-color: $light-blue;
+    background-color: lighten($blue, 10%);
     cursor: pointer;
   }
 }
@@ -51,7 +59,7 @@ a {
 }
 
 .credential-value {
-  background-color: lighten($light-blue, 30%);
+  background-color: $light-blue;
   margin: 0 auto;
   max-width: 400px;
   padding: 1em;
@@ -101,14 +109,22 @@ a {
   font-size: 1em;
 }
 
-.gdrivelist ul {
-  list-style: none;
+.gdrivelist {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  h3 {
+    color: $blue;
+    padding-left: .5em;
+  }
 }
 
 .gdrivelist-separator {
   border-color: lighten($light-grey, 10%);
   color: $light-grey;
-  margin: -1em 1.75em 0 2.5em;
+  margin: -1em 2.25em 0 0;
 }
 
 .gdrivelist-folder,
@@ -118,10 +134,31 @@ a {
   width: 95%;
 
   &:hover {
-    background-color: lighten($light-grey, 10%);
+    background-color: lighten($light-blue, 25%);
   }
 }
 
+.gdrivelist-file.selected {
+  background-color: lighten($light-blue, 10%);
+}
+
+.gdrivelist-actions {
+  float: right;
+  margin-top: .5em;
+
+  a {
+    background-color: lighten($light-grey, 10%);
+    border: solid .1em $dark-grey;
+    border-radius: .5em;
+    margin-top: .5em;
+    padding: .25em 1.5em;
+
+    &:hover {
+      background-color: lighten($light-grey, 5%);
+
+    }
+  }
+}
 
 .gdrivelist-icon {
   border: solid .01em $dark-grey;
