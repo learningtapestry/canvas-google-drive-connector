@@ -3,7 +3,7 @@
     <% list.select(&:folder?).each do |f| %>
       <li>
         <a class="gdrivelist-folder" href="#">
-          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder icon">
+          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder">
           <%= f.name %>
           <span class="gdrivelist-arrow">&rsaquo;</span>
         </a>
@@ -16,7 +16,7 @@
     <% list.select(&:file?).each do |f| %>
       <li>
         <a class="gdrivelist-file" href="<%= f.link %>">
-          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder icon">
+          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
           <%= f.name %>
         </a>
       </li>

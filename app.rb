@@ -9,13 +9,15 @@ configure do
   log_file.sync = true
 
   set :protection, except: :frame_options # allow embeding on iFrames
-  set :assets_css_compressor, :sass
-  set :assets_js_compressor, :uglifier
   enable :dump_errors, :raise_errors if development?
   enable :static, :sessions
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
+  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list']
+
+  set :assets_css_compressor, :sass
+  set :assets_js_compressor, :uglifier
   register Sinatra::AssetPipeline
 end
 
@@ -63,8 +65,13 @@ end
 # XXX: Temporary for local testing
 get '/lti/course-navigation' do
   (session[:user_id] = 1) && authenticate!([:google])
+  erb :'lti/course_navigation'
+end
+
+post '/lti/gdrive-list' do
+  session[:user_id] && authenticate!([:google]) # && CSRF
   gdrive = GDriveService.new(google_auth.credentials)
-  erb :'lti/course_navigation', locals: { gdrive: gdrive }
+  partial :'lti/gdrive_list', list: gdrive.list(params[:parent_id])
 end
 
 post '/lti/course-navigation' do
