@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/learningtapestry/canvas-google-drive-connector/badge.svg?targetFile=Gemfile.lock)](https://snyk.io/test/github/learningtapestry/canvas-google-drive-connector?targetFile=Gemfile.lock)
+
 # CanvasLMS / GoogleDrive integration
 
 Simple [LTI](http://www.imsglobal.org/activity/learning-tools-interoperability) app for providing google-drive integration into [CanvasLMS](http://canvaslms.com/)
