@@ -8,12 +8,12 @@ configure do
   log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
   log_file.sync = true
 
-  set :protection, except: :frame_options # allow embeding on iFrames
+  set :protection, except: :frame_options
   enable :dump_errors, :raise_errors if development?
   enable :static, :sessions
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
-  use Rack::PostBodyContentTypeParser # Add json data to params on POST requests
+  use Rack::PostBodyContentTypeParser
   use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list']
 
   set :assets_css_compressor, :sass
@@ -62,12 +62,6 @@ end
 # ============
 # LTI endpoints
 
-# XXX: Temporary for local testing
-get '/lti/course-navigation' do
-  (session[:user_id] = 1) && authenticate!([:google])
-  erb :'lti/course_navigation'
-end
-
 post '/lti/gdrive-list' do
   session[:user_id] && authenticate!([:google]) # && CSRF
   gdrive = GDriveService.new(google_auth.credentials)
@@ -76,5 +70,10 @@ end
 
 post '/lti/course-navigation' do
   authenticate! %i(lti google)
-  erb :'lti/course_navigation'
+  erb :'lti/file_browser', locals: { browser_type: :navigation }
+end
+
+post '/lti/editor-selection' do
+  authenticate! %i(lti google)
+  erb :'lti/file_browser', locals: { browser_type: :selection }
 end

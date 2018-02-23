@@ -9,6 +9,15 @@ window.App = {
       var $el = $(el);
       if ($el.length > 0 && app[fn]) app[fn]($el);
     });
+  },
+  post: function(url, data, cb) {
+    $.ajax({
+      type: 'POST',
+      url: url, data: data,
+      cache: false,
+      headers: { 'X_CSRF_TOKEN': App.csrf_token },
+      success: cb
+    });
   }
 };
 
@@ -18,6 +27,6 @@ $(function() {
   App.initialize({
     '.googleauth.authorize': 'googleauthAuthorize',
     '.googleauth.success': 'googleauthSuccess',
-    '.course-navigation': 'gdriveList'
+    '.file-browser': 'gdriveList'
   });
 });
