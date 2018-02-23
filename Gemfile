@@ -14,10 +14,10 @@ gem 'rack_csrf', '~> 2.6', require: 'rack/csrf'
 gem 'rake', '~> 12.3'
 gem 'require_all', '~> 1.5'
 gem 'sass', '~> 3.5', '>= 3.5.5'
-gem 'sinatra', '~> 2.0'
+gem 'sinatra', '~> 2.0.1'
 gem 'sinatra-activerecord', '~> 2.0', '>= 2.0.13'
 gem 'sinatra-asset-pipeline', '~> 2.0', require: 'sinatra/asset_pipeline'
-gem 'sinatra-contrib', '~> 2.0', require: false
+gem 'sinatra-contrib', '~> 2.0.1', require: false
 gem 'uglifier', '~> 4.1', '>= 4.1.6'
 
 group :development, :test do
