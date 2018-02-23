@@ -1,0 +1,46 @@
+.googleauth {
+  text-align: center;
+
+  h1 {
+    margin: 2em auto;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  .show {
+    display: inline-block;
+    transition: display 1s ease-in-out;
+  }
+
+  .hide {
+    display: none;
+    transition: display 1s ease-in-out;
+  }
+}
+
+.googleauth-btn,
+.googleauth-next {
+  background-color: $light-grey;
+  border-color: $dark-grey;
+  border-radius: .5em;
+  box-shadow: $text 2px 2px 2px;
+  color: $text;
+  display: inline-block;
+  margin: 1em auto;
+  padding: 1em;
+  text-align: center;
+  width: 200px;
+}
+
+.googleauth-btn:hover,
+.googleauth-next:hover {
+  background-color: lighten($light-grey, 5%);
+  box-shadow: lighten($dark-grey, 10%) 2px 2px 2px;
+}
+
+.googleauth-next {
+  display: none;
+  font-size: 1em;
+}

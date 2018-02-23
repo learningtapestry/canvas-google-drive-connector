@@ -1,0 +1,110 @@
+.gdrivelist {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  h3 {
+    color: $blue;
+    padding-left: .5em;
+  }
+}
+
+.gdrivelist-back {
+  margin-bottom: 2em;
+
+  a {
+    padding: 1.5em .5em 1em;
+
+    &:hover {
+      background-color: lighten($light-grey, 10%);
+    }
+  }
+
+  span {
+    border: solid .01em $dark-grey;
+    border-radius: 1em;
+    color: lighten($dark-grey, 20%);
+    display: inline-block;
+    font-size: 1.5em;
+    margin-right: .5em;
+    padding: .1em .35em;
+    transform: rotate(180deg);
+  }
+}
+
+.gdrivelist-empty {
+  color: $dark-grey;
+  margin-bottom: 1em;
+  padding: 1em 4em;
+}
+
+.gdrivelist-separator {
+  border-color: lighten($light-grey, 10%);
+  color: $light-grey;
+  margin: -1em 2.25em 0 0;
+}
+
+.gdrivelist-folder,
+.gdrivelist-file {
+  display: inline-block;
+  padding: .5em .5em 1em;
+  width: 95%;
+
+  &:hover {
+    background-color: lighten($light-blue, 25%);
+  }
+
+
+}
+
+.gdrivelist-file.selected {
+  background-color: lighten($light-blue, 10%);
+
+  .gdrivelist-actions .action {
+    visibility: visible;
+  }
+}
+
+.gdrivelist-actions {
+  float: right;
+  margin-top: .5em;
+
+  .action {
+    background-color: lighten($light-grey, 10%);
+    border: solid .1em $dark-grey;
+    border-radius: .5em;
+    margin-top: .5em;
+    padding: .25em 1.5em;
+    visibility: hidden;
+
+    &:hover {
+      background-color: lighten($light-grey, 5%);
+    }
+  }
+
+  form {
+    float: right;
+
+    .action {
+      margin-left: 1em;
+      margin-top: -.5em;
+    }
+  }
+}
+
+.gdrivelist-icon {
+  border: solid .01em $dark-grey;
+  border-radius: 1em;
+  margin-bottom: -.7em;
+  margin-right: 1em;
+  padding: .5em;
+  width: 1em;
+}
+
+.gdrivelist-arrow {
+  color: lighten($dark-grey, 20%);
+  float: right;
+  font-weight: bold;
+  margin-top: .7em;
+}

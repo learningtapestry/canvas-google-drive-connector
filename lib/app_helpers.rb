@@ -8,6 +8,7 @@ module AppHelpers
   def authenticate_lti
     if (lti_auth = LtiAuth.new(request)) && lti_auth.valid?
       session[:user_id] = params['custom_user_id']
+      session[:return_url] = params['content_item_return_url']
     else
       logger.warn("LTI Authentication error: #{lti_auth.error}")
       error 401

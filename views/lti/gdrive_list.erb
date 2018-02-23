@@ -7,12 +7,10 @@
   <% if folders.empty? %><p class="gdrivelist-empty">There are no subfolders here.</p><% end %>
   <ul class="gdrivelist-folders">
     <% folders.each do |f| %>
-      <li>
-        <a class="gdrivelist-folder" href="#" data-gdrive-id="<%= f.id %>">
-          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder">
-          <%= f.name %>
-          <span class="gdrivelist-arrow">&rsaquo;</span>
-        </a>
+      <li class="gdrivelist-folder" data-gdrive-id="<%= f.id %>">
+        <img class="gdrivelist-icon" src="<%= f.icon %>" alt="folder">
+        <%= f.name %>
+        <span class="gdrivelist-arrow">&rsaquo;</span>
       </li>
     <% end %>
   </ul>
@@ -23,11 +21,28 @@
   <% if files.empty? %><p class="gdrivelist-empty">There are no files here.</p><% end %>
   <ul class="gdrivelist-files">
     <% files.each do |f| %>
-      <li>
-        <a class="gdrivelist-file" href="#" data-link="<%= f.link %>">
-          <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
-          <%= f.name %>
-        </a>
+      <li class="gdrivelist-file">
+        <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
+        <%= f.name %>
+
+        <span class="gdrivelist-actions">
+          <% if params[:browser_type] == 'selection' %>
+            <form method="post" action="<%= session[:return_url] %>">
+              <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
+              <input type="hidden" name="lti_version" value="LTI-1p0"/>
+              <input type="hidden" name="content_items" value='<%= ContentItems.build_link(f).to_json %>'/>
+              <button type="submit" class="action">Link</button>
+            </form>
+          <form method="post" action="<%= session[:return_url] %>">
+              <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
+              <input type="hidden" name="lti_version" value="LTI-1p0"/>
+              <input type="hidden" name="content_items" value='<%= ContentItems.build_embed(f).to_json %>'/>
+              <button type="submit" class="action">Embed</button>
+            </form>
+          <% else %>
+            <a class="action" href="<%= f.link %>" target="_blank">Open</a>
+          <% end %>
+        </span>
       </li>
     <% end %>
   </ul>
