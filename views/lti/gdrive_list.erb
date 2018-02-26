@@ -27,18 +27,14 @@
 
         <span class="gdrivelist-actions">
           <% if params[:browser_type] == 'selection' %>
-            <form method="post" action="<%= session[:return_url] %>">
-              <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
-              <input type="hidden" name="lti_version" value="LTI-1p0"/>
-              <input type="hidden" name="content_items" value='<%= ContentItems.build_link(f).to_json %>'/>
-              <button type="submit" class="action">Link</button>
-            </form>
-          <form method="post" action="<%= session[:return_url] %>">
-              <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
-              <input type="hidden" name="lti_version" value="LTI-1p0"/>
-              <input type="hidden" name="content_items" value='<%= ContentItems.build_embed(f).to_json %>'/>
-              <button type="submit" class="action">Embed</button>
-            </form>
+            <% [:link, :embed].each do |type| %>
+              <form method="post" action="<%= session[:return_url] %>">
+                <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
+                <input type="hidden" name="lti_version" value="LTI-1p0"/>
+                <input type="hidden" name="content_items" value='<%= ContentItems.build(f, type).to_json %>'/>
+                <button type="submit" class="action"><%= type.to_s.titleize %></button>
+              </form>
+            <% end %>
           <% else %>
             <a class="action" href="<%= f.link %>" target="_blank">Open</a>
           <% end %>
