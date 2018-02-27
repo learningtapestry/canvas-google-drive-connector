@@ -19,7 +19,6 @@ class GDriveService
   end
 
   def list(folder = 'root')
-    puts "list for '#{folder}'"
     gdrive_files = service.fetch_all(items: :files) do |token|
       service.list_files(
         q: "'#{folder}' in parents and trashed = false",

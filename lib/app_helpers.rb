@@ -11,7 +11,7 @@ module AppHelpers
       session[:return_url] = params['content_item_return_url']
     else
       logger.warn("LTI Authentication error: #{lti_auth.error}")
-      error 401
+      error 401, lti_auth.error
     end
   end
 

@@ -27,7 +27,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.6', '>= 1.6.2'
+  gem 'nokogiri', '~> 1.8', '>= 1.8.2'
   gem 'rack-test', '~> 0.8.2'
   gem 'rspec', '~> 3.7'
+  gem 'simplecov', '~> 0.15.1'
 end
