@@ -6,6 +6,11 @@ production: &production
       run_on: all_servers
       apply_during: all
       sudo: true
+    - command: cd $STACK_PATH && BUNDLE_GEMFILE=$STACK_PATH/Gemfile bundle exec rake assets:precompile
+      target: sinatra
+      execute: true
+      run_on: all_servers
+      apply_during: deploy_only
 staging:
   <<: *production
 development:
