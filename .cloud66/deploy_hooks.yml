@@ -1,0 +1,12 @@
+production: &production
+  after_sinatra:
+    - command: cd $STACK_PATH && chgrp -R app_writers tmp && chown -R nginx:app_writers tmp && chmod 775 tmp && chmod g+s tmp && chmod -R g+rw tmp
+      target: sinatra
+      execute: true
+      run_on: all_servers
+      apply_during: all
+      sudo: true
+staging:
+  <<: *production
+development:
+  <<: *production
