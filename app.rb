@@ -5,7 +5,7 @@ require 'sinatra/respond_with'
 require_relative 'init'
 
 configure do
-  log_file = File.new(APP_ROOT.join('logs', "#{settings.environment}.log"), 'a+')
+  log_file = File.new(APP_ROOT.join('log', "#{settings.environment}.log"), 'a+')
   log_file.sync = true
 
   set :protection, except: :frame_options
@@ -14,7 +14,7 @@ configure do
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser
-  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list']
+  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list'] unless test?
 
   set :assets_css_compressor, :sass
   set :assets_js_compressor, :uglifier
@@ -50,11 +50,11 @@ end
 # ============
 # Google Oauth2
 
-get '/google_auth' do
+get '/google-auth' do
   redirect google_auth.authorization_url unless google_auth.credentials
 end
 
-get '/google_auth/callback' do
+get '/google-auth/callback' do
   google_auth.callback(request)
   erb :'google_auth/success'
 end

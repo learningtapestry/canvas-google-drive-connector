@@ -19,7 +19,7 @@ class GoogleAuth
       client_id = Google::Auth::ClientId.new(ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'])
       token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKENS_FILE)
       scope = %w(https://www.googleapis.com/auth/drive)
-      Google::Auth::WebUserAuthorizer.new(client_id, scope, token_store, '/google_auth/callback')
+      Google::Auth::WebUserAuthorizer.new(client_id, scope, token_store, '/google-auth/callback')
     end
   end
 

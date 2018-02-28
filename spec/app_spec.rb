@@ -59,6 +59,33 @@ describe 'LTI authentication' do
   end
 end
 
+describe 'googleauth' do
+  it 'redirect to google authorization when do not have credentials' do
+    get '/google-auth'
+    expect(last_response).to be_redirect
+    follow_redirect!
+    expect(last_request.url).to start_with('https://accounts.google.com/o/oauth2/auth')
+  end
+
+  it 'callback and render success' do
+    expect(Google::Auth::WebUserAuthorizer).to receive(:handle_auth_callback_deferred)
+    get '/google-auth/callback'
+    expect(last_response).to be_ok
+    expect(last_response).to have_css('.googleauth.success')
+  end
+end
+
+describe 'gdrive-list' do
+  it 'render gdrivelist partial' do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    allow_any_instance_of(Google::Apis::DriveV3::DriveService).to receive(:list_files).and_return(
+      OpenStruct.new(files: [OpenStruct.new(id: '1234', name: 'my-file')])
+    )
+    post '/lti/gdrive-list', browser_type: :selection
+    expect(last_response).to be_ok
+  end
+end
+
 describe 'course-navigation' do
   it 'authenticates oauth LTI requests' do
     lti_request '/lti/course-navigation'
@@ -88,3 +115,4 @@ describe 'editor-selection' do
     expect(component.attr('data-browser-type')).to eq 'selection'
   end
 end
+
