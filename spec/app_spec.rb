@@ -115,4 +115,3 @@ describe 'editor-selection' do
     expect(component.attr('data-browser-type')).to eq 'selection'
   end
 end
-
