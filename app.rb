@@ -18,6 +18,7 @@ configure do
 
   set :assets_css_compressor, :sass
   set :assets_js_compressor, :uglifier
+  set :assets_paths, %w(assets assets/js assets/css)
   register Sinatra::AssetPipeline
 end
 
