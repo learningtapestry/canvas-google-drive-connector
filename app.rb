@@ -78,3 +78,9 @@ post '/lti/editor-selection' do
   authenticate! %i(lti google)
   erb :'lti/file_browser', locals: { browser_type: :selection }
 end
+
+post '/lti/homework-submission' do
+  authenticate! %i(lti google)
+  pp params
+  erb :'lti/file_browser', locals: { browser_type: :submission }
+end

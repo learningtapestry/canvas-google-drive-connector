@@ -32,7 +32,7 @@
       <lticm:property name="text">Google Drive</lticm:property>
       <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/course-navigation</lticm:property>
     </lticm:options>
-    <lticm:property name="domain">lti-gdrive:3000</lticm:property>
+    <lticm:property name="domain"><%= ENV['LTI_APP_DOMAIN'] %></lticm:property>
     <lticm:options name="editor_button">
       <lticm:property name="icon_url"><%= ENV['LTI_APP_DOMAIN'] %>/assets/gdrive_icon.png</lticm:property>
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>
@@ -45,7 +45,7 @@
       <lticm:property name="icon_url"><%= ENV['LTI_APP_DOMAIN'] %>/assets/gdrive_icon.png</lticm:property>
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>
       <lticm:property name="text">Google Drive</lticm:property>
-      <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/homework-selection</lticm:property>
+      <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/homework-submission</lticm:property>
     </lticm:options>
     <lticm:options name="link_selection">
       <lticm:property name="enabled">true</lticm:property>
@@ -53,7 +53,7 @@
       <lticm:property name="selection_height">600</lticm:property>
       <lticm:property name="selection_width">700</lticm:property>
       <lticm:property name="text">Google Drive</lticm:property>
-      <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/content-selection</lticm:property>
+      <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/link-selection</lticm:property>
     </lticm:options>
   </blti:extensions>
 </cartridge_basiclti_link>

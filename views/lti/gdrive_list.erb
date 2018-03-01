@@ -28,13 +28,10 @@
         <span class="gdrivelist-actions">
           <% if params[:browser_type] == 'selection' %>
             <% [:link, :embed].each do |type| %>
-              <form method="post" action="<%= session[:return_url] %>">
-                <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
-                <input type="hidden" name="lti_version" value="LTI-1p0"/>
-                <input type="hidden" name="content_items" value='<%= ContentItems.build(f, type).to_json %>'/>
-                <button type="submit" class="action"><%= type.to_s.titleize %></button>
-              </form>
+              <%= partial :'lti/content_items_response', f: f, type: type %>
             <% end %>
+          <% elsif params[:browser_type] == 'submission' %>
+            <%= partial :'lti/content_items_response', f: f, type: :submit %>
           <% else %>
             <a class="action" href="<%= f.link %>" target="_blank">Open</a>
           <% end %>

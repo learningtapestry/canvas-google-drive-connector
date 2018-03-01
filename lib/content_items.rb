@@ -7,7 +7,7 @@ module ContentItems
       '@id': f.id,
       url: f.link,
       title: f.name,
-      mediaType: 'text/html',
+      mediaType: 'text/html'
     }
     if type == :embed
       item[:placementAdvice] = {
