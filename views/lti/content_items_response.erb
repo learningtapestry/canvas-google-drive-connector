@@ -1,4 +1,4 @@
-<form method="post" action="<%= session[:return_url] %>">
+<form method="post" class="content-items-form" action="<%= session[:return_url] %>">
   <input type="hidden" name="lti_message_type" value="ContentItemSelection"/>
   <input type="hidden" name="lti_version" value="LTI-1p0"/>
   <input type="hidden" name="content_items" value='<%= ContentItems.build(f, type).to_json %>'/>

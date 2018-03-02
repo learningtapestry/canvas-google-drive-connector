@@ -7,7 +7,7 @@ class GDriveService
   MIME_FILE = 'application/vnd.google-apps.document'
 
   # rubocop:disable Style/SingleLineMethods
-  GDriveFile = Struct.new(:id, :name, :kind, :link, :icon, keyword_init: true) do
+  GDriveFile = Struct.new(:id, :name, :kind, :link, :icon, :content, keyword_init: true) do
     def file?; kind == :file end
 
     def folder?; kind == :folder end
@@ -19,7 +19,7 @@ class GDriveService
   end
 
   def list(folder = 'root')
-    gdrive_files = service.fetch_all(items: :files) do |token|
+    files = service.fetch_all(items: :files) do |token|
       service.list_files(
         q: "'#{folder}' in parents and trashed = false",
         order_by: 'folder, name',
@@ -27,13 +27,21 @@ class GDriveService
         page_token: token
       )
     end
-    gdrive_files.map do |f|
-      kind = f.mime_type == MIME_FOLDER ? :folder : :file
-      GDriveFile.new(id: f.id, name: f.name, kind: kind, link: f.web_view_link, icon: f.icon_link)
-    end
+    files.map { |f| build_gdrive_file(f) }
+  end
+
+  def fetch(file_id)
+    file = service.get_file(file_id, fields: 'id, name, mimeType, webViewLink, iconLink')
+    content = service.export_file(file_id, 'text/html', download_dest: StringIO.new).string
+    build_gdrive_file(file, content: content)
   end
 
   private
+
+  def build_gdrive_file(f, content: nil)
+    kind = f.mime_type == MIME_FOLDER ? :folder : :file
+    GDriveFile.new(id: f.id, name: f.name, kind: kind, link: f.web_view_link, icon: f.icon_link, content: content)
+  end
 
   def service
     @servie ||= begin

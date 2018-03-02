@@ -14,7 +14,7 @@ configure do
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser
-  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list'] unless test?
+  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list', 'POST:/lti/content'] unless test?
 
   set :assets_css_compressor, :sass
   set :assets_js_compressor, :uglifier
@@ -81,6 +81,19 @@ end
 
 post '/lti/homework-submission' do
   authenticate! %i(lti google)
-  pp params
   erb :'lti/file_browser', locals: { browser_type: :submission }
+end
+
+post '/lti/content' do
+  session[:user_id] && authenticate!([:google]) # && CSRF
+  file = GDriveService.new(google_auth.credentials).fetch(params[:file_id])
+  File.open(APP_ROOT.join('tmp', "#{file.id}.html"), 'w') { |f| f.write(file.content) }
+  erb :'lti/content-submission', locals: { file: file }
+end
+
+get '/lti/content/:file_id' do |file_id|
+  filename = "#{file_id}.html"
+  headers['Content-Disposition'] = "attachment;filename=\"#{filename}\""
+  content_type 'application/octet-stream'
+  File.read("./tmp/#{filename}")
 end

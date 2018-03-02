@@ -31,7 +31,11 @@
               <%= partial :'lti/content_items_response', f: f, type: type %>
             <% end %>
           <% elsif params[:browser_type] == 'submission' %>
-            <%= partial :'lti/content_items_response', f: f, type: :submit %>
+            <form method="post" action="/lti/content">
+              <%= Rack::Csrf.tag(env) %>
+              <input type="hidden" name="file_id" value="<%= f.id %>"/>
+              <button type="submit" class="action">Submit</button>
+            </form>
           <% else %>
             <a class="action" href="<%= f.link %>" target="_blank">Open</a>
           <% end %>
