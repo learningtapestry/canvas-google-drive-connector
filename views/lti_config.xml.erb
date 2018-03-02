@@ -23,6 +23,7 @@
     <lticm:property name="user_id">$Canvas.user.id</lticm:property>
   </blti:custom>
   <blti:extensions platform="canvas.instructure.com">
+    <lticm:property name="domain"><%= ENV['LTI_APP_DOMAIN'].gsub(/https?:\/\//, '') %></lticm:property>
     <lticm:options name="assignment_selection">
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>
       <lticm:property name="text">Google Docs Cloud Assignment</lticm:property>
@@ -32,7 +33,6 @@
       <lticm:property name="text">Google Drive</lticm:property>
       <lticm:property name="url"><%= ENV['LTI_APP_DOMAIN'] %>/lti/course-navigation</lticm:property>
     </lticm:options>
-    <lticm:property name="domain"><%= ENV['LTI_APP_DOMAIN'] %></lticm:property>
     <lticm:options name="editor_button">
       <lticm:property name="icon_url"><%= ENV['LTI_APP_DOMAIN'] %>/assets/gdrive_icon.png</lticm:property>
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>

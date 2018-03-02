@@ -28,7 +28,7 @@
         <span class="gdrivelist-actions">
           <% if params[:browser_type] == 'selection' %>
             <% [:link, :embed].each do |type| %>
-              <%= partial :'lti/content_items_response', f: f, type: type %>
+              <%= partial :'lti/content_items_response', f: f, type: type, btn_label: type.to_s.titleize %>
             <% end %>
           <% elsif params[:browser_type] == 'submission' %>
             <form method="post" action="/lti/content">

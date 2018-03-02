@@ -21,17 +21,16 @@ module ContentItems
     }
   end
 
-  def self.build_submit_item(f)
+  def self.build_file_item(f)
     {
       '@type': 'FileItem',
       '@id': f.id,
       url: (ENV['LTI_APP_DOMAIN'] + "/lti/content/#{f.id}"),
-      text: f.name,
-      # mediaType: 'text/html',
+      text: "#{f.id}.html",
       placementAdvice: {
-        presentationDocumentTarget: 'embed',
-        displayWidth: '100%',
-        displayHeight: '100%'
+        presentationDocumentTarget: 'iframe',
+        displayWidth: '800',
+        displayHeight: '600'
       }
     }
 
