@@ -24,18 +24,7 @@
       <li class="gdrivelist-file">
         <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
         <%= f.name %>
-
-        <span class="gdrivelist-actions">
-          <% if params[:browser_type] == 'selection' %>
-            <% [:link, :embed].each do |type| %>
-              <%= partial :'lti/content_items_response', f: f, type: type %>
-            <% end %>
-          <% elsif params[:browser_type] == 'submission' %>
-            <%= partial :'lti/content_items_response', f: f, type: :submit %>
-          <% else %>
-            <a class="action" href="<%= f.link %>" target="_blank">Open</a>
-          <% end %>
-        </span>
+        <%= partial :"lti/_file_action_#{action}", file: f %>
       </li>
     <% end %>
   </ul>

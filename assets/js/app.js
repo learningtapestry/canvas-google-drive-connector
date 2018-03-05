@@ -27,6 +27,7 @@ $(function() {
   App.initialize({
     '.googleauth.authorize': 'googleauthAuthorize',
     '.googleauth.success': 'googleauthSuccess',
-    '.file-browser': 'gdriveList'
+    '.file-browser': 'gdriveList',
+    '.content-submission': 'contentSubmission'
   });
 });

@@ -1,10 +1,10 @@
 App.gdriveList = function(container) {
   var state = {folder_id: 'root', parents: [], index: 0};
-  var browserType = container.data('browser-type');
+  var action = container.data('action');
 
   var fetchFolder = function() {
     clear();
-    App.post('/lti/gdrive-list', { folder_id: state.folder_id, browser_type: browserType}, update);
+    App.post('/lti/gdrive-list', { folder_id: state.folder_id, action: action}, update);
   }
 
   var clear = function () {
