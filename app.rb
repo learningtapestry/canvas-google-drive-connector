@@ -14,7 +14,7 @@ configure do
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser
-  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list', 'POST:/lti/content'] unless test?
+  use Rack::Csrf, raise: true, check_only: ['POST:/lti/gdrive-list', 'POST:/lti/document'] unless test?
 
   set :assets_css_compressor, :sass
   set :assets_js_compressor, :uglifier
@@ -64,36 +64,40 @@ end
 # LTI endpoints
 
 post '/lti/gdrive-list' do
-  session[:user_id] && authenticate!([:google]) # && CSRF
-  gdrive = GDriveService.new(google_auth.credentials)
-  partial :'lti/gdrive_list', list: gdrive.list(params[:folder_id])
+  session[:user_id] && authenticate!([:google])
+  list = GDriveService.new(google_auth.credentials).list params[:folder_id]
+  partial :'lti/gdrive_list', list: list, action: params[:action]
 end
 
 post '/lti/course-navigation' do
   authenticate! %i(lti google)
-  erb :'lti/file_browser', locals: { browser_type: :navigation }
+  erb :'lti/file_browser', locals: { action: :navigate }
 end
 
 post '/lti/editor-selection' do
   authenticate! %i(lti google)
-  erb :'lti/file_browser', locals: { browser_type: :selection }
+  erb :'lti/file_browser', locals: { action: :select }
 end
 
 post '/lti/homework-submission' do
   authenticate! %i(lti google)
-  erb :'lti/file_browser', locals: { browser_type: :submission }
+
+  session[:submission_context] = params.slice(
+    :tool_consumer_instance_guid, :context_title, :custom_domain, :custom_user_id,
+    :lis_person_name_full, :ext_lti_assignment_id
+  ).merge(submission: 'homework').to_json
+
+  erb :'lti/file_browser', locals: { action: :submit }
 end
 
-post '/lti/content' do
-  session[:user_id] && authenticate!([:google]) # && CSRF
-  file = GDriveService.new(google_auth.credentials).fetch(params[:file_id])
-  File.open(APP_ROOT.join('tmp', "#{file.id}.html"), 'w') { |f| f.write(file.content) }
+post '/lti/documents' do
+  session[:user_id] && authenticate!([:google])
+  file = GDriveService.new(google_auth.credentials).fetch params[:file_id]
+  Document.persist_gdrive_file file, session[:submission_context]
   erb :'lti/content-submission', locals: { file: file }
 end
 
-get '/lti/content/:file_id' do |file_id|
-  filename = "#{file_id}.html"
-  headers['Content-Disposition'] = "attachment;filename=\"#{filename}\""
-  content_type 'application/octet-stream'
-  File.read("./tmp/#{filename}")
+post '/lti/documents/:file_id' do |file_id|
+  authenticate! %i(lti)
+  Document.find_by!(file_id: file_id).content
 end

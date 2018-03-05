@@ -81,7 +81,7 @@ describe 'gdrive-list' do
     allow_any_instance_of(Google::Apis::DriveV3::DriveService).to receive(:list_files).and_return(
       OpenStruct.new(files: [OpenStruct.new(id: '1234', name: 'my-file')])
     )
-    post '/lti/gdrive-list', browser_type: :selection
+    post '/lti/gdrive-list', action: :select
     expect(last_response).to be_ok
   end
 end
@@ -97,7 +97,7 @@ describe 'course-navigation' do
     lti_request '/lti/course-navigation'
     expect(last_response).to have_css('.file-browser')
     component = Nokogiri::HTML(last_response.body).css('.file-browser').first
-    expect(component.attr('data-browser-type')).to eq 'navigation'
+    expect(component.attr('data-action')).to eq 'navigate'
   end
 end
 
@@ -112,6 +112,6 @@ describe 'editor-selection' do
     lti_request '/lti/editor-selection'
     expect(last_response).to have_css('.file-browser')
     component = Nokogiri::HTML(last_response.body).css('.file-browser').first
-    expect(component.attr('data-browser-type')).to eq 'selection'
+    expect(component.attr('data-action')).to eq 'select'
   end
 end

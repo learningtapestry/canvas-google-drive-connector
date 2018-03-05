@@ -24,22 +24,7 @@
       <li class="gdrivelist-file">
         <img class="gdrivelist-icon" src="<%= f.icon %>" alt="file">
         <%= f.name %>
-
-        <span class="gdrivelist-actions">
-          <% if params[:browser_type] == 'selection' %>
-            <% [:link, :embed].each do |type| %>
-              <%= partial :'lti/content_items_response', f: f, type: type, btn_label: type.to_s.titleize %>
-            <% end %>
-          <% elsif params[:browser_type] == 'submission' %>
-            <form method="post" action="/lti/content">
-              <%= Rack::Csrf.tag(env) %>
-              <input type="hidden" name="file_id" value="<%= f.id %>"/>
-              <button type="submit" class="action">Submit</button>
-            </form>
-          <% else %>
-            <a class="action" href="<%= f.link %>" target="_blank">Open</a>
-          <% end %>
-        </span>
+        <%= partial :"lti/_file_action_#{action}", file: f %>
       </li>
     <% end %>
   </ul>

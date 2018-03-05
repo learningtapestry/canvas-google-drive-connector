@@ -22,18 +22,21 @@ module ContentItems
   end
 
   def self.build_file_item(f)
+    url = (ENV['LTI_APP_DOMAIN'] + "/lti/documents/#{f.id}")
     {
-      '@type': 'FileItem',
-      '@id': f.id,
-      url: (ENV['LTI_APP_DOMAIN'] + "/lti/content/#{f.id}"),
-      text: "#{f.id}.html",
+      '@type': "LtiLinkItem",
+      '@id': url,
+      url: url,
+      title: f.name,
+      text: f.name,
+      mediaType: 'application/vnd.ims.lti.v1.ltilink',
+      windowTarget: '',
       placementAdvice: {
-        presentationDocumentTarget: 'iframe',
-        displayWidth: '800',
-        displayHeight: '600'
+        displayWidth: 800,
+        displayHeight: 600,
+        presentationDocumentTarget: 'window'
       }
     }
-
   end
 
   def self.build_link_item(f)

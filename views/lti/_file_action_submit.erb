@@ -1,0 +1,7 @@
+<span class="gdrivelist-actions">
+  <form method="post" action="/lti/documents">
+    <%= Rack::Csrf.tag(env) %>
+    <input type="hidden" name="file_id" value="<%= file.id %>"/>
+    <button type="submit" class="action">Submit</button>
+  </form>
+</span>

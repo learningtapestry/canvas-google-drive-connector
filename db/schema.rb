@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213170148) do
+ActiveRecord::Schema.define(version: 20180304210653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,18 @@ ActiveRecord::Schema.define(version: 20180213170148) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_auth_credentials_on_key"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "file_id", null: false
+    t.string "content_type"
+    t.text "content"
+    t.string "user_id"
+    t.string "doc_type"
+    t.jsonb "context", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["file_id"], name: "index_documents_on_file_id"
   end
 
 end
