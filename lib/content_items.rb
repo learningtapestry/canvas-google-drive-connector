@@ -22,9 +22,9 @@ module ContentItems
   end
 
   def self.build_file_item(f)
-    url = (ENV['LTI_APP_DOMAIN'] + "/lti/documents/#{f.id}")
+    url = File.join(ENV['LTI_APP_URL'], "/lti/documents/#{f.id}")
     {
-      '@type': "LtiLinkItem",
+      '@type': 'LtiLinkItem',
       '@id': url,
       url: url,
       title: f.name,

@@ -3,10 +3,10 @@
     <p>Click the button below and after you finished authorizing, click the "Next" button.</p>
 
     <div>
-        <a class="googleauth-btn" href="/google-auth" target="_blank">Authorize on Google</a>
+        <a class="googleauth-btn" href="<%= url_for('google-auth') %>" target="_blank">Authorize on Google</a>
     </div>
     <div>
-        <form method='post' action='/lti/course-navigation'>
+        <form method="post" action="<%= url_for('/lti/course-navigation') %>">
             <% params.except(:captures).each do |key, val| %>
             <input type="hidden" name="<%= key %>" value="<%= val %>" />
             <% end %>

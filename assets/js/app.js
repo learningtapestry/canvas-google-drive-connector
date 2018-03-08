@@ -20,11 +20,16 @@ window.App = {
       success: cb,
       error: err
     });
+  },
+  urlFor: function(path) {
+    if (path.startsWith('/')) { path = path.substring(1) }
+    return App.root_path + path;
   }
 };
 
 $(function () {
   App.csrf_token = $('meta[name="_csrf"]').attr('content');
+  App.root_path = $('meta[name="_root_path"]').attr('content');
 
   App.initialize({
     '.googleauth.authorize': 'googleauthAuthorize',
