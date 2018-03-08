@@ -1,10 +1,10 @@
-App.gdriveList = function(container) {
-  var state = {folder_id: 'root', parents: [], index: 0};
+App.gdriveList = function (container) {
+  var state = { folder_id: 'root', parents: [], index: 0 };
   var action = container.data('action');
 
-  var fetchFolder = function() {
+  var fetchFolder = function () {
     clear();
-    App.post('/lti/gdrive-list', { folder_id: state.folder_id, action: action}, update);
+    App.post('/lti/gdrive-list', { folder_id: state.folder_id, action: action }, update, error);
   }
 
   var clear = function () {
@@ -19,7 +19,11 @@ App.gdriveList = function(container) {
     bindEvents();
   }
 
-  var bindEvents = function() {
+  var error = function (xhr) {
+    container.html('<h2>' + xhr.statusText + '</h2><br/>' + xhr.response);
+  };
+
+  var bindEvents = function () {
     container.find('.gdrivelist-back a').on('click', function (_e) {
       state.folder_id = state.parents[state.index - 1];
       state.parents = state.parents.slice(0, state.index - 1);

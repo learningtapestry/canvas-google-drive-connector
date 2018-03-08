@@ -10,18 +10,20 @@ window.App = {
       if ($el.length > 0 && app[fn]) app[fn]($el);
     });
   },
-  post: function(url, data, cb) {
+  post: function (url, data, cb, err) {
     $.ajax({
       type: 'POST',
-      url: url, data: data,
+      url: url,
+      data: $.extend(data, { '_csrf': App.csrf_token }),
       cache: false,
       headers: { 'X_CSRF_TOKEN': App.csrf_token },
-      success: cb
+      success: cb,
+      error: err
     });
   }
 };
 
-$(function() {
+$(function () {
   App.csrf_token = $('meta[name="_csrf"]').attr('content');
 
   App.initialize({
