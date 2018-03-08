@@ -4,7 +4,8 @@ App.gdriveList = function (container) {
 
   var fetchFolder = function () {
     clear();
-    App.post('/lti/gdrive-list', { folder_id: state.folder_id, action: action }, update, error);
+    var url = App.urlFor('/lti/gdrive-list');
+    App.post(url, { folder_id: state.folder_id, action: action }, update, error);
   }
 
   var clear = function () {

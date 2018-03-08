@@ -26,4 +26,9 @@ module AppHelpers
   def partial(template, locals = {})
     erb(template, layout: false, locals: locals)
   end
+
+  def url_for(path)
+    root_path = URI.parse(ENV['LTI_APP_URL']).path
+    File.join(root_path, path)
+  end
 end
