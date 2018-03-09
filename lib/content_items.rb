@@ -22,7 +22,7 @@ module ContentItems
   end
 
   def self.build_file_item(f)
-    url = File.join(ENV['LTI_APP_URL'], "/lti/documents/#{f.id}")
+    url = AppHelpers.url_for "/lti/documents/#{f.id}", full: true
     {
       '@type': 'LtiLinkItem',
       '@id': url,

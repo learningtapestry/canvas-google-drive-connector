@@ -7,8 +7,8 @@
                          xsi:schemaLocation="http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0p1.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
   <blti:title>Google Drive</blti:title>
   <blti:description>Google Drive integration for Canvas</blti:description>
-  <blti:launch_url><%= File.join ENV['LTI_APP_URL'], '/lti/course-navigation' %></blti:launch_url>
-  <blti:icon><%= File.join ENV['LTI_APP_URL'], '/assets/gdrive_icon.png' %></blti:icon>
+  <blti:launch_url><%= AppHelpers.url_for '/lti/course-navigation', full: true %></blti:launch_url>
+  <blti:icon><%= AppHelpers.url_for '/gdrive_icon.png', full: true %></blti:icon>
   <blti:custom>
     <lticm:property name="account_id">$Canvas.account.id</lticm:property>
     <lticm:property name="assignment_title">$Canvas.assignment.title</lticm:property>
@@ -23,25 +23,25 @@
     <lticm:property name="user_id">$Canvas.user.id</lticm:property>
   </blti:custom>
   <blti:extensions platform="canvas.instructure.com">
-    <lticm:property name="domain"><%= URI::parse(ENV['LTI_APP_URL']).host %></lticm:property>
+    <lticm:property name="domain"><%= URI::parse(ENV.fetch('LTI_APP_URL')).host %></lticm:property>
     <lticm:options name="course_navigation">
       <lticm:property name="text">Google Drive</lticm:property>
-      <lticm:property name="url"><%= File.join ENV['LTI_APP_URL'], '/lti/course-navigation' %></lticm:property>
+      <lticm:property name="url"><%= AppHelpers.url_for '/lti/course-navigation', full: true %></lticm:property>
     </lticm:options>
     <lticm:options name="editor_button">
-      <lticm:property name="icon_url"><%= File.join ENV['LTI_APP_URL'], '/assets/gdrive_icon.png' %></lticm:property>
+      <lticm:property name="icon_url"><%= AppHelpers.url_for '/gdrive_icon.png', full: true %></lticm:property>
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>
       <lticm:property name="selection_height">600</lticm:property>
       <lticm:property name="selection_width">700</lticm:property>
-      <lticm:property name="url"><%= File.join ENV['LTI_APP_URL'], '/lti/editor-selection' %></lticm:property>
+      <lticm:property name="url"><%= AppHelpers.url_for '/lti/editor-selection', full: true %></lticm:property>
     </lticm:options>
     <lticm:options name="homework_submission">
       <lticm:property name="enabled">true</lticm:property>
       <lticm:property name="canvas_icon_class">icon-lti</lticm:property>
-      <lticm:property name="icon_url"><%= File.join ENV['LTI_APP_URL'], '/assets/gdrive_icon.png' %></lticm:property>
+      <lticm:property name="icon_url"><%= AppHelpers.url_for '/gdrive_icon.png', full: true %></lticm:property>
       <lticm:property name="message_type">ContentItemSelectionRequest</lticm:property>
       <lticm:property name="text">Google Drive</lticm:property>
-      <lticm:property name="url"><%= File.join ENV['LTI_APP_URL'], '/lti/homework-submission' %></lticm:property>
+      <lticm:property name="url"><%= AppHelpers.url_for '/lti/homework-submission', full: true %></lticm:property>
     </lticm:options>
     <lticm:options name="link_selection">
       <lticm:property name="enabled">true</lticm:property>
@@ -49,7 +49,7 @@
       <lticm:property name="selection_height">600</lticm:property>
       <lticm:property name="selection_width">700</lticm:property>
       <lticm:property name="text">Google Drive</lticm:property>
-      <lticm:property name="url"><%= File.join ENV['LTI_APP_URL'], '/lti/link-selection' %></lticm:property>
+      <lticm:property name="url"><%= AppHelpers.url_for '/lti/link-selection', full: true %></lticm:property>
     </lticm:options>
   </blti:extensions>
 </cartridge_basiclti_link>
