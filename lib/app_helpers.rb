@@ -27,8 +27,13 @@ module AppHelpers
     erb(template, layout: false, locals: locals)
   end
 
-  def url_for(path)
-    root_path = URI.parse(ENV['LTI_APP_URL']).path
+  def self.url_for(path, full: false)
+    @base_url ||= ENV.fetch('LTI_APP_URL')
+    root_path = full ? @base_url : URI.parse(@base_url).path
     File.join(root_path, path)
+  end
+
+  def url_for(path, full: false)
+    AppHelpers.url_for path, full: full
   end
 end

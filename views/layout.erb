@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<%= Rack::Csrf.metatag(env) %>
-		<% root_path = URI.parse(ENV['LTI_APP_URL']).path.presence || '/' %>
-		<meta name="_root_path" content="<%= root_path %>">
-		<link rel="stylesheet" href="<%= File.join root_path, stylesheet_path('app') %>">
+		<meta name="_root_path" content="<%= url_for '/' %>">
+		<link rel="stylesheet" href="<%= url_for stylesheet_path('app') %>">
   </head>
   <body>
 		<div class="container">
@@ -18,6 +17,6 @@
 				<%= yield %>
 			</div>
 		</div>
-		<script src="<%= File.join root_path, javascript_path('app') %>"></script>
+		<script src="<%= url_for javascript_path('app') %>"></script>
   </body>
 </html>
