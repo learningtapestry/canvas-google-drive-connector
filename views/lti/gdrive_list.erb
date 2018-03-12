@@ -6,6 +6,7 @@
   <div class="gdrivelist-back">
     <a href="#"><span>&#10140;</span> Back to parent folder</a>
   </div>
+  <% unless search_term %>
   <h3>Folders</h3>
   <% folders = list.select(&:folder?) %>
   <% if folders.empty? %><p class="gdrivelist-empty">There are no subfolders here.</p><% end %>
@@ -19,6 +20,7 @@
     <% end %>
   </ul>
   <hr class="gdrivelist-separator">
+  <% end %>
 
   <h3>Files</h3>
   <% files = list.select(&:file?) %>
