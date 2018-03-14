@@ -10,6 +10,33 @@
   }
 }
 
+.gdrivelist-search {
+  display: block;
+  margin: 1em auto;
+  position: relative;
+  width: 50%;
+
+  img {
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    right: .8em;
+    top: -.2em;
+    width: 3em;
+  }
+
+  input {
+    border: solid 1px $light-grey;
+    border-radius: 1.5em;
+    padding: 1em 2em;
+    width: 40em;
+
+    &:focus {
+      border: solid 1px $light-blue;
+    }
+  }
+}
+
 .gdrivelist-back {
   margin-bottom: 2em;
 

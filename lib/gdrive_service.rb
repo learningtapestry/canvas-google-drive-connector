@@ -18,10 +18,23 @@ class GDriveService
     @credentials = credentials
   end
 
-  def list(folder = 'root')
+  def list(folder)
+    folder = 'root' if folder.blank?
     files = service.fetch_all(items: :files) do |token|
       service.list_files(
         q: "'#{folder}' in parents and trashed = false",
+        order_by: 'folder, name',
+        fields: 'files(id, name, mimeType, webViewLink, iconLink)',
+        page_token: token
+      )
+    end
+    files.map { |f| build_gdrive_file(f) }
+  end
+
+  def search(search_term)
+    files = service.fetch_all(items: :files) do |token|
+      service.list_files(
+        q: "name contains '#{search_term}' and mimeType != '#{MIME_FOLDER}' and  trashed = false",
         order_by: 'folder, name',
         fields: 'files(id, name, mimeType, webViewLink, iconLink)',
         page_token: token

@@ -65,8 +65,10 @@ end
 
 post '/lti/gdrive-list' do
   session[:user_id] && authenticate!([:google])
-  list = GDriveService.new(google_auth.credentials).list params[:folder_id]
-  partial :'lti/gdrive_list', list: list, action: params[:action]
+  gdrive = GDriveService.new(google_auth.credentials)
+  search_term = params[:search_term].presence
+  list = search_term ? gdrive.search(search_term) : gdrive.list(params[:folder_id])
+  partial :'lti/gdrive_list', list: list, action: params[:action], search_term: search_term
 end
 
 post '/lti/course-navigation' do

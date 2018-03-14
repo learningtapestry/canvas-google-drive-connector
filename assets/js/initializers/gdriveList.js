@@ -8,8 +8,16 @@ App.gdriveList = function (container) {
     App.post(url, { folder_id: state.folder_id, action: action }, update, error);
   }
 
+  var search = function (term) {
+    clear();
+    state = { folder_id: 'root', parents: [], index: 0 };
+    var url = App.urlFor('/lti/gdrive-list');
+    App.post(url, { search_term: term, action: action }, update, error);
+  }
+
   var clear = function () {
     container.off('click');
+    container.off('change');
     container.empty();
     container.html('<div class="loader">Loading...</div>');
   }
@@ -25,6 +33,15 @@ App.gdriveList = function (container) {
   };
 
   var bindEvents = function () {
+    container.find('.gdrivelist-search input[name=search_term]').on('change', function(e) {
+      var term = $(e.target).val();
+      search(term);
+    });
+    container.find('.gdrivelist-search img').on('click', function (e) {
+      var term = $('.gdrivelist-search input[name=search_term]').val();
+      search(term);
+    });
+
     container.find('.gdrivelist-back a').on('click', function (_e) {
       state.folder_id = state.parents[state.index - 1];
       state.parents = state.parents.slice(0, state.index - 1);
