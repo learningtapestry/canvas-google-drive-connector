@@ -21,7 +21,7 @@ module RSpecMixin
   end
 
   def lti_request(path, credential: nil, timestamp: nil, signature: nil)
-    credential ||=  AuthCredential.generate
+    credential ||= AuthCredential.generate
     url = 'http://example.org' + path
     params = {
       oauth_consumer_key: credential.key,

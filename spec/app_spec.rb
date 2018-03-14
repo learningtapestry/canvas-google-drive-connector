@@ -115,3 +115,57 @@ describe 'editor-selection' do
     expect(component.attr('data-action')).to eq 'select'
   end
 end
+
+describe 'homework-submission' do
+  it 'authenticates oauth LTI requests' do
+    lti_request '/lti/homework-submission'
+    expect(last_response).to be_ok
+  end
+
+  it 'render file-browser component when is authorized on google' do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    lti_request '/lti/homework-submission'
+    expect(last_response).to have_css('.file-browser')
+    component = Nokogiri::HTML(last_response.body).css('.file-browser').first
+    expect(component.attr('data-action')).to eq 'submit'
+  end
+
+  it 'store context on redis' do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    lti_request '/lti/homework-submission'
+    value = AppHelpers.redis.get('_lti_test:context:user-id')
+    expect(value).to_not be_nil
+    expect(JSON.parse(value)['context_title']).to eq 'GDrive test'
+  end
+end
+
+describe 'documents' do
+  before do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    lti_request '/lti/homework-submission'
+  end
+
+  def mock_file
+    service = Google::Apis::DriveV3::DriveService
+    file_id = SecureRandom.hex(8)
+    allow_any_instance_of(service).to receive(:get_file).and_return OpenStruct.new(id: file_id)
+    allow_any_instance_of(service).to receive(:export_file).and_return OpenStruct.new(string: 'file-content')
+    file_id
+  end
+
+  it 'renders content-submission' do
+    post '/lti/documents', file_id: mock_file
+
+    expect(last_response).to be_ok
+    expect(last_response).to have_css('.content-submission')
+  end
+
+  it 'create a document object' do
+    file_id = mock_file
+    post '/lti/documents', file_id: file_id
+
+    document = Document.last
+    expect(document.file_id).to eq file_id
+    expect(document.content).to eq 'file-content'
+  end
+end
