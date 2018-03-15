@@ -9,8 +9,8 @@ configure do
   log_file.sync = true
 
   set :protection, except: :frame_options
-  enable :dump_errors, :raise_errors if development?
-  enable :static, :sessions
+  enable :static, :sessions, :dump_errors, :raise_errors
+  set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(32) }
 
   use Rack::CommonLogger, Logger.new(log_file, 'weekly')
   use Rack::PostBodyContentTypeParser
@@ -64,9 +64,8 @@ end
 # LTI endpoints
 
 post '/lti/gdrive-list' do
-  session[:user_id] && authenticate!([:google])
+  user_id && authenticate!([:google])
   gdrive = GDriveService.new(google_auth.credentials)
-  search_term = params[:search_term].presence
   list = search_term ? gdrive.search(search_term) : gdrive.list(params[:folder_id])
   partial :'lti/gdrive_list', list: list, action: params[:action], search_term: search_term
 end
@@ -83,19 +82,15 @@ end
 
 post '/lti/homework-submission' do
   authenticate! %i(lti google)
-
-  session[:submission_context] = params.slice(
-    :tool_consumer_instance_guid, :context_title, :custom_domain, :custom_user_id,
-    :lis_person_name_full, :ext_lti_assignment_id
-  ).merge(submission: 'homework').to_json
-
+  SubmissionContext.new(user_id, params).store
   erb :'lti/file_browser', locals: { action: :submit }
 end
 
 post '/lti/documents' do
-  session[:user_id] && authenticate!([:google])
+  user_id && authenticate!([:google])
   file = GDriveService.new(google_auth.credentials).fetch params[:file_id]
-  Document.persist_gdrive_file file, session[:submission_context]
+  context = SubmissionContext.new(user_id, params).fetch
+  Document.persist_gdrive_file file, context
   erb :'lti/content-submission', locals: { file: file }
 end
 

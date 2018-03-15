@@ -16,15 +16,27 @@ module AppHelpers
   end
 
   def authenticate_google
-    halt erb(:'google_auth/authorize') unless session[:user_id] && google_auth.credentials
+    halt erb(:'google_auth/authorize') unless user_id && google_auth.credentials
   end
 
   def google_auth
-    @google_auth ||= GoogleAuth.new(request, session[:user_id])
+    @google_auth ||= GoogleAuth.new(request, user_id)
   end
 
   def partial(template, locals = {})
     erb(template, layout: false, locals: locals)
+  end
+
+  def self.redis
+    @redis ||= Redis.new(url: ENV.fetch('REDIS_URL', 'redis://localhost:6379'))
+  end
+
+  def redis
+    AppHelpers.redis
+  end
+
+  def search_term
+    params[:search_term].presence
   end
 
   def self.url_for(path, full: false)
@@ -35,5 +47,9 @@ module AppHelpers
 
   def url_for(path, full: false)
     AppHelpers.url_for path, full: full
+  end
+
+  def user_id
+    session[:user_id].presence
   end
 end
