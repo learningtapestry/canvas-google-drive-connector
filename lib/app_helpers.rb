@@ -19,6 +19,10 @@ module AppHelpers
     halt erb(:'google_auth/authorize') unless user_id && google_auth.credentials
   end
 
+  def authenticate_user
+    error 401, 'No session user' unless user_id
+  end
+
   def google_auth
     @google_auth ||= GoogleAuth.new(request, user_id)
   end

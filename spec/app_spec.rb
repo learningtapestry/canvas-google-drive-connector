@@ -81,7 +81,7 @@ describe 'gdrive-list' do
     allow_any_instance_of(Google::Apis::DriveV3::DriveService).to receive(:list_files).and_return(
       OpenStruct.new(files: [OpenStruct.new(id: '1234', name: 'my-file')])
     )
-    post '/lti/gdrive-list', action: :select
+    post '/lti/gdrive-list', { action: :select }, 'rack.session' => {user_id: 'user-id'}
     expect(last_response).to be_ok
   end
 end
