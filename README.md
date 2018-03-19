@@ -45,6 +45,84 @@ uses Rspec: `bundle exec rspec`
 
 you can check the coverage report on `coverage/index.html`
 
+## API
+
+### Config
+
+- `/` [GET]
+    - simple root endpoint (used mostly for smoke testing)
+    - response: `plain/text` with the project name
+
+- `/config.xml` [GET]
+    - The LTI app configuration inside canvas is done via an XML document using the IMS Common Cartridge specification
+    - https://www.imsglobal.org/cc/index.html.
+    - response: `application/xml` with the config.
+
+### Credentials management
+
+- `/credentials/new` [GET]
+    - render new credentials form
+
+- `/credentials` [POST]
+    - build new credentials pair and return to the user
+
+### Google Oauth2
+
+used internally
+
+- `/google-auth` [GET]
+    - Redirect to Google's authorization page if we don't have the credentials yet.
+
+- `/google-auth/callback` [GET]
+    - handle the callback from google after authorization
+
+### LTI endpoints
+
+All LTI launch requests are done via `POST`
+
+- `/lti/gdrive-list` [POST]
+    - Renders a google drive list.
+    - This action is used internally on XHR requests, after we've accessed a LTI launch url.
+    - authentication: `session user`, `google credentials` and `csrf token`
+    -  Params:
+       * `folder_id` : list the contents of this folder
+       * `search_term` : term to search on the user's drive file names
+       * `action` : which kind of action should be enabled when a file is selected
+
+- `/lti/course-navigation` [POST]
+    - Launch url for course navigation (tab shown on the course sidebar)
+    - The *navigate* action just open the gdrive file in a new browser tab.
+    - authentication: `lti request` and `google credentials`
+    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+- `/lti/editor-selection` [POST]
+    - Launch url for editor selection (button inside the rich-text editor fields)
+    - The *select* action shows the options for `link` or `embed` the file in the content.
+    - authentication: `lti request` and `google credentials`
+    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+- `/lti/homework-submission` [POST]
+    - Launch url for homework submission (tab on the assignment submission form)
+    - The *submit* action generate a lti-link object (https://www.imsglobal.org/specs/lticiv1p0/specification-1).
+    - This object is later used to embed an html snapshot of the file on the speed-grader.
+    - authentication: `lti request` and `google credentials`
+    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+- `/lti/documents` [POST]
+    - Generate an HTML snapshot of the google drive document
+    - authentication: `session user`, `google credentials` and `csrf token`
+    - Params:
+        * file_id : the gdrive file id
+
+- `/lti/documents/:file_id` [POST]
+    - Renders the document snapshot HTML content for embeding on the speed-grader
+    - Usually called from a `LtiLinkItem` object on Canvas.
+    - authentication: `lti request`
+    - Params:
+        * file_id : the gdrive file id
+        * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+
 ## LICENSE
 
 This project is licensed under [GPL3](https://tldrlegal.com/license/gnu-general-public-license-v3-\(gpl-3\))

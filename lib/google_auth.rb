@@ -4,9 +4,17 @@ require 'googleauth'
 require 'googleauth/stores/redis_token_store'
 require 'googleauth/web_user_authorizer'
 
+#
+# Google Oauth2 wrapper
+#
 class GoogleAuth
   attr_reader :request, :user_id
 
+  #
+  # Params:
+  #   - request: rack request
+  #   - user_id: canvas user id
+  #
   def initialize(request, user_id)
     @request = request
     @user_id = "#{user_id}@#{request.ip}"

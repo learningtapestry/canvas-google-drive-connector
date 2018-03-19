@@ -119,7 +119,7 @@ end
 #
 post '/lti/homework-submission' do
   authenticate! %i(lti google)
-  SubmissionContext.new(user_id, params).store
+  SubmissionContext.new(user_id, params).save
   erb :'lti/file_browser', locals: { action: :submit }
 end
 
@@ -133,7 +133,7 @@ post '/lti/documents' do
   authenticate! %i(user google)
   file = GDriveService.new(google_auth.credentials).fetch(params[:file_id])
   context = SubmissionContext.new(user_id, params).fetch
-  Document.persist_gdrive_file(file, context)
+  Document.save_submission_from_gdrive(file, context)
   erb :'lti/content-submission', locals: { file: file }
 end
 
