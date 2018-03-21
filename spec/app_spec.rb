@@ -116,6 +116,36 @@ describe 'editor-selection' do
   end
 end
 
+describe 'resource-selection' do
+  it 'authenticates oauth LTI requests' do
+    lti_request '/lti/resource-selection'
+    expect(last_response).to be_ok
+  end
+
+  it 'render file-browser component when is authorized on google' do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    lti_request '/lti/resource-selection'
+    expect(last_response).to have_css('.file-browser')
+    component = Nokogiri::HTML(last_response.body).css('.file-browser').first
+    expect(component.attr('data-action')).to eq 'link_resource'
+  end
+end
+
+describe 'link-selection' do
+  it 'authenticates oauth LTI requests' do
+    lti_request '/lti/link-selection'
+    expect(last_response).to be_ok
+  end
+
+  it 'render file-browser component when is authorized on google' do
+    allow_any_instance_of(GoogleAuth).to receive(:credentials).and_return(OpenStruct.new)
+    lti_request '/lti/link-selection'
+    expect(last_response).to have_css('.file-browser')
+    component = Nokogiri::HTML(last_response.body).css('.file-browser').first
+    expect(component.attr('data-action')).to eq 'link_resource'
+  end
+end
+
 describe 'homework-submission' do
   it 'authenticates oauth LTI requests' do
     lti_request '/lti/homework-submission'

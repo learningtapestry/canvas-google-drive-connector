@@ -112,7 +112,7 @@ end
 
 #
 # Launch url for resource selection (module -> add item -> external tool)
-# The *select* action shows the options for `link` or `embed` the file in the content.
+# The *link_resource* action generate a lti-link for the resource selected.
 #
 # Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 #
@@ -123,7 +123,7 @@ end
 
 #
 # Launch url for resource selection (module -> add item -> external tool)
-# The *select* action shows the options for `link` or `embed` the file in the content.
+# The *link_resource* action generate a lti-link for the resource selected.
 #
 # Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 #
@@ -133,7 +133,7 @@ post '/lti/link-selection' do
 end
 
 #
-# Simple proxy for a LtiLinkItem with a drive document
+# Simple proxy for a drive document called from a LtiLinkItem.
 #
 # Params:
 #   * file_id : the gdrive file id

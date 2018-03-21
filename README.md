@@ -101,6 +101,26 @@ All LTI launch requests are done via `POST`
     - authentication: `lti request` and `google credentials`
     - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 
+-`/lti/resource-selection` [POST]
+    - Launch url for resource selection (module -> add item -> external tool)
+    - The *link_resource* action generate a lti-link for the resource selected.
+    - authentication: `lti request` and `google credentials`
+    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+-`/lti/link-selection` [POST]
+    - Launch url for resource selection (module -> add item -> external tool)
+    - The *link_resource* action generate a lti-link for the resource selected.
+    - authentication: `lti request` and `google credentials`
+    - `resource-selection` and `link-selection` are the same.
+    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
+- `/lti/resources/:file_id` [POST]
+    - Simple proxy for a drive document called from a LtiLinkItem.
+    - authentication: `lti request`
+    - Params:
+        * file_id : the gdrive file id
+        * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+
 - `/lti/homework-submission` [POST]
     - Launch url for homework submission (tab on the assignment submission form)
     - The *submit* action generate a lti-link object (https://www.imsglobal.org/specs/lticiv1p0/specification-1).
@@ -112,15 +132,15 @@ All LTI launch requests are done via `POST`
     - Generate an HTML snapshot of the google drive document
     - authentication: `session user`, `google credentials` and `csrf token`
     - Params:
-        * file_id : the gdrive file id
+       * file_id : the gdrive file id
 
 - `/lti/documents/:file_id` [POST]
     - Renders the document snapshot HTML content for embeding on the speed-grader
     - Usually called from a `LtiLinkItem` object on Canvas.
     - authentication: `lti request`
     - Params:
-        * file_id : the gdrive file id
-        * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+       * file_id : the gdrive file id
+       * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 
 
 ## LICENSE
