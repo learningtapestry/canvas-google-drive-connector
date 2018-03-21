@@ -36,7 +36,7 @@ module ContentItems
   end
 
   #
-  # Build a LtiLinkItem launch object for embeding a HTML resource.
+  # Build a LtiLinkItem launch object for a embeded document HTML snapshot.
   # The LtiLinkItem is essentialy a way for canvas to display resources dinamicaly fetching from our api.
   # https://www.imsglobal.org/lti/model/mediatype/application/vnd/ims/lti/v1/contentitems%2Bjson/index.html#LtiLinkItem
   #
@@ -70,6 +70,27 @@ module ContentItems
       title: f.name,
       text: f.name,
       mediaType: 'text/html'
+    }
+  end
+
+  #
+  # Build a LtiLinkItem launch object for a embeded resource.
+  # https://www.imsglobal.org/lti/model/mediatype/application/vnd/ims/lti/v1/contentitems%2Bjson/index.html#LtiLinkItem
+  #
+  def self.build_resource_item(f)
+    url = AppHelpers.url_for "/lti/resources/#{f.id}", full: true
+    {
+      '@type': 'LtiLinkItem',
+      '@id': url,
+      url: url,
+      title: f.name,
+      text: f.name,
+      mediaType: 'application/vnd.ims.lti.v1.ltilink',
+      placementAdvice: {
+        displayWidth: 800,
+        displayHeight: 600,
+        presentationDocumentTarget: 'iframe'
+      }
     }
   end
 end

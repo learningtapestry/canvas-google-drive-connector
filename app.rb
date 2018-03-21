@@ -111,6 +111,40 @@ post '/lti/editor-selection' do
 end
 
 #
+# Launch url for resource selection (module -> add item -> external tool)
+# The *select* action shows the options for `link` or `embed` the file in the content.
+#
+# Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+#
+post '/lti/resource-selection' do
+  authenticate! %i(lti google)
+  erb :'lti/file_browser', locals: { action: :link_resource }
+end
+
+#
+# Launch url for resource selection (module -> add item -> external tool)
+# The *select* action shows the options for `link` or `embed` the file in the content.
+#
+# Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+#
+post '/lti/link-selection' do
+  authenticate! %i(lti google)
+  erb :'lti/file_browser', locals: { action: :link_resource }
+end
+
+#
+# Simple proxy for a LtiLinkItem with a drive document
+#
+# Params:
+#   * file_id : the gdrive file id
+#   * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
+#
+post '/lti/resources/:file_id' do |file_id|
+  authenticate! %i(lti)
+  redirect "https://docs.google.com/document/d/#{file_id}"
+end
+
+#
 # Launch url for homework submission (tab on the assignment submission form)
 # The *submit* action generate a lti-link object (https://www.imsglobal.org/specs/lticiv1p0/specification-1).
 # This object is later used to embed an html snapshot of the file on the speed-grader.
