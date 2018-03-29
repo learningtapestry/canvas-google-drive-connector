@@ -23,3 +23,7 @@ development:
 test:
   <<: *default
   database: <%= ENV['POSTGRESQL_DATABASE'] %>_test
+
+qa:
+  <<: *default
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>_qa
