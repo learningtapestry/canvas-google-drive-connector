@@ -2,7 +2,8 @@
 
 # CanvasLMS / GoogleDrive integration
 
-Simple [LTI](http://www.imsglobal.org/activity/learning-tools-interoperability) app for providing google-drive integration into [CanvasLMS](http://canvaslms.com/)
+Simple [LTI](http://www.imsglobal.org/activity/learning-tools-interoperability) app for providing
+google-drive integration into [CanvasLMS](http://canvaslms.com/)
 
 Features:
 - allow educators to link/embed gdrive files into course content
@@ -11,16 +12,29 @@ Features:
 ## Getting Started
 
 This app uses:
-* Ruby 2.5.0 + Sinatra
-* `PostgreSQL 9.6`
-* Redis
+- Ruby 2.5.0 + Sinatra
+- PostgreSQL 9.6
+- Redis
 
-You must set an app on the `Google Developers Console` with access to the `Drive API`.
-There you should get the credentials for `oauth2` to be used on this app.
-Remember to set correctly the javascript origin and the callback url (the endpoint is: `<lti-app-url>/google-auth/callback`)
+You must create an app on the [Google Developer Console](https://console.developers.google.com).
+- After creating the app, enable access to the Drive API for it
+- Create credentials for the app
+  - When asked where you will be calling the API from, select "Web server"
+  - When asked what data you will be accessing, select "User data"
+  - Under "Authorized Javascript origins" enter the URL where this app is deployed
+  - Under "Authorized redirect URIs" enter the same URL as above, with `/google-auth/callback` at
+    the end
 
-For configuring, first create your `.env` file:  `cp .env.template .env`
-and then modify with your credentials (database, google app, redis, url, etc)
+This will give you the credentials for OAuth2 to be used in this app.
+
+To configure this app with your new credentials, first create your `.env` file by running `cp
+.env.template .env` and then modify with your new Google credentials:
+
+```
+SESSION_SECRET=[Generate a string here with SecureRandom.hex(32)]
+GOOGLE_KEY=[Your Google client ID]
+GOOGLE_SECRET=[Your Google client secret]
+```
 
 Install dependencies and create the database:
 ```
