@@ -115,13 +115,13 @@ All LTI launch requests are done via `POST`
     - authentication: `lti request` and `google credentials`
     - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 
--`/lti/resource-selection` [POST]
+- `/lti/resource-selection` [POST]
     - Launch url for resource selection (module -> add item -> external tool)
     - The *link_resource* action generate a lti-link for the resource selected.
     - authentication: `lti request` and `google credentials`
     - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
 
--`/lti/link-selection` [POST]
+- `/lti/link-selection` [POST]
     - Launch url for resource selection (module -> add item -> external tool)
     - The *link_resource* action generate a lti-link for the resource selected.
     - authentication: `lti request` and `google credentials`
