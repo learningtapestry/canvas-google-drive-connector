@@ -16,16 +16,22 @@ This app uses:
 - PostgreSQL 9.6
 - Redis
 
-You must create an app on the [Google Developer Console](https://console.developers.google.com).
-- After creating the app, enable access to the Drive API for it
-- Create credentials for the app
+1) Create a Google app on the [Google Developer Console](https://console.developers.google.com).
+
+2) Enable access to the Drive API for the newly created Google app
+
+3) Create credentials for accessing the Google app
   - When asked where you will be calling the API from, select "Web server"
   - When asked what data you will be accessing, select "User data"
   - Under "Authorized Javascript origins" enter the URL where this app is deployed
   - Under "Authorized redirect URIs" enter the same URL as above, with `/google-auth/callback` at
     the end
 
-This will give you the credentials for OAuth2 to be used in this app.
+  This will give you the OAuth2 credentials to be used in this app to access
+  the Google app.
+
+4) Go to the "Domain verification" tab and verify the domain this app is
+running on.
 
 To configure this app with your new credentials, first create your `.env` file by running `cp
 .env.template .env` and then modify with your new Google credentials:
