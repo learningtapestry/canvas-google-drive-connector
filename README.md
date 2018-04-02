@@ -59,6 +59,12 @@ For running the server:
 you can have an interactive console with the app configured and imported, using:
 `bundle exec rake console`
 
+## Launching from Canvas LMS
+
+To launch the Google Drive Connector app from a Canvas instance, see this wiki:
+
+https://github.com/learningtapestry/canvas-google-drive-connector/wiki/Configuring-the-LTI-application
+
 ## tests
 
 uses Rspec: `bundle exec rspec`
