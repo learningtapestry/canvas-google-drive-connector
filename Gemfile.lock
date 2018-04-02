@@ -194,6 +194,7 @@ DEPENDENCIES
   ims-lti (~> 2.2, >= 2.2.3)
   nokogiri (~> 1.8, >= 1.8.2)
   pg (~> 0.18)
+  pry
   pry-byebug
   puma
   rack-contrib (~> 2.0, >= 2.0.1)
