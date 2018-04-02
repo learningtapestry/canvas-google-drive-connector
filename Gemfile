@@ -20,6 +20,7 @@ gem 'sinatra-activerecord', '~> 2.0', '>= 2.0.13'
 gem 'sinatra-asset-pipeline', '~> 2.0', require: 'sinatra/asset_pipeline'
 gem 'sinatra-contrib', '~> 2.0.1', require: false
 gem 'uglifier', '~> 4.1', '>= 4.1.6'
+gem 'pry'
 
 group :development, :test do
   gem 'byebug'
