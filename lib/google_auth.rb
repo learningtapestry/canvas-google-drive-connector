@@ -8,6 +8,8 @@ require 'googleauth/web_user_authorizer'
 # Google Oauth2 wrapper
 #
 class GoogleAuth
+  API_SCOPE = %w(https://www.googleapis.com/auth/drive.readonly).freeze
+
   attr_reader :request, :user_id
 
   #
@@ -24,9 +26,8 @@ class GoogleAuth
     @authorizer ||= begin
       client_id = Google::Auth::ClientId.new(ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'])
       token_store = Google::Auth::Stores::RedisTokenStore.new(redis: AppHelpers.redis)
-      scope = %w(https://www.googleapis.com/auth/drive)
       callback_url = AppHelpers.url_for('/google-auth/callback')
-      Google::Auth::WebUserAuthorizer.new(client_id, scope, token_store, callback_url)
+      Google::Auth::WebUserAuthorizer.new(client_id, API_SCOPE, token_store, callback_url)
     end
   end
 
