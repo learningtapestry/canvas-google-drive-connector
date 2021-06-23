@@ -17,7 +17,7 @@ GEM
     aes_key_wrap (1.0.1)
     arel (8.0.0)
     backports (3.16.1)
-    bindata (2.4.5)
+    bindata (2.4.10)
     builder (3.2.3)
     byebug (9.1.0)
     coderay (1.1.2)
