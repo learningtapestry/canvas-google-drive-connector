@@ -30,7 +30,7 @@ end
 
 group :test do
   gem 'database_cleaner', '~> 1.6', '>= 1.6.2'
-  gem 'nokogiri', '~> 1.10'
+  gem 'nokogiri', '~> 1.12'
   gem 'rack-test', '~> 0.8.2'
   gem 'rspec', '~> 3.7'
   gem 'simplecov', '~> 0.15.1'
