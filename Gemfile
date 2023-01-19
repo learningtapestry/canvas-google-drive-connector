@@ -3,7 +3,7 @@
 ruby '2.5.0'
 source 'http://rubygems.org'
 
-gem 'activerecord', '~> 5.1', '>= 5.1.4'
+gem 'activerecord', '~> 6.1'
 gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'google-api-client', '~> 0.19.6'
 gem 'googleauth', '~> 0.6.2'
